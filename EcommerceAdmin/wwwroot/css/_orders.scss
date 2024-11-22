@@ -1,0 +1,114 @@
+.orders-page {
+	.orders-section {
+		padding-top: var(--page-top-padding);
+		padding-bottom: 64px;
+
+		.header {
+			display: flex;
+			justify-content: space-between;
+
+			.group {
+				display: flex;
+				gap: 16px;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+
+		.orders {
+			margin-top: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+
+			.detail {
+				display: flex;
+				gap: 4px;
+				justify-content: center;
+				align-items: center;
+
+				.value {
+					font-size: 16px;
+					color: var(--black);
+				}
+			}
+
+			& > .card {
+				.header {
+					.status {
+						.value {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							padding: 4px 8px;
+							border-radius: 4px;
+							font-size: 14px;
+						}
+
+						&.active {
+							.value {
+								background-color: var(--light-yellow);
+								color: var(--yellow);
+							}
+						}
+
+						&.completed {
+							.value {
+								background-color: var(--light-green);
+								color: var(--green);
+							}
+						}
+
+						&.cancelled {
+							.value {
+								background-color: var(--light-red);
+								color: var(--red);
+							}
+						}
+					}
+				}
+				.body {
+					.card {
+						display: flex;
+						padding: var(--spacing) 0;
+						border-top: 1px solid var(--border);
+
+						.product {
+							display: flex;
+							gap: 16px;
+							align-items: center;
+
+							.image {
+								width: 148px;
+								aspect-ratio: 1/1;
+
+								img {
+									width: 100%;
+									height: 100%;
+									border-radius: 12px;
+								}
+							}
+
+							.info {
+								h6 {
+									font-size: 16px;
+									margin-bottom: 8px;
+								}
+							}
+						}
+
+						.others {
+							display: flex;
+							justify-content: space-between;
+						}
+					}
+				}
+
+				.footer {
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
+		}
+	}
+}

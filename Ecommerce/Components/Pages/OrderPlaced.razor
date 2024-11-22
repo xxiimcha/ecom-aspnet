@@ -1,0 +1,66 @@
+﻿@page "/order-placed"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+
+<div class="order-placed-page">
+    <section>
+        <img src="/assets/images/Order Placed.png"/>
+
+        <h1 class="page-title">Order Placed</h1>
+
+        <div class="total">
+            <p class="light">Total</p>
+            <p class="value">₱1,989</p>
+        </div>
+
+        <p class="light date-ref">September 12, 2024 ∙ Ref. # ORD098765XZ</p>
+
+        <div class="order-details table-card">
+            <div class="header row">
+                <h6 class="title">Order Details</h6>
+            </div>
+
+            <div class="body row">
+                <div>
+                    <p class="label">Payment Method</p>
+                    <p class="value">GCash</p>
+                </div>
+
+                <div>
+                    <p class="label">Items Purchased</p>
+                    <p class="value">3</p>
+                </div>
+
+                <div>
+                    <p class="label">Subtotal</p>
+                    <p class="value">₱1,798</p>
+                </div>
+
+                <div>
+                    <p class="label">Shipping Fee</p>
+                    <p class="value">₱59</p>
+                </div>
+            </div>
+        </div>
+
+        <a class="outline" href="/home">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill-rule: evenodd;
+                        }</style>
+                </defs>
+                <path class="cls-1" d="M16.86,94A12.92,12.92,0,0,1,4,79.76l7-71A3.07,3.07,0,0,1,14,6H86A3.06,3.06,0,0,1,89,9l7,70.75A12.91,12.91,0,0,1,83.14,94Zm9.29-67.9C26.32,40.18,30.88,57.61,50,57.61S73.71,40.22,73.84,26.08c0-4-6.08-4.09-6.12,0C67.61,36.84,65,51.46,50,51.46S32.41,36.78,32.28,26c-.05-4-6.17-4-6.13.08Zm-10,61.72h67.7a6.79,6.79,0,0,0,6.09-7.46L83.18,12.15H16.82L10.05,80.36a6.79,6.79,0,0,0,6.1,7.46Z" />
+            </svg>
+
+            <p>Continue shopping</p>
+
+        </a>
+    </section>
+</div>
+
+@code {
+
+}

@@ -1,0 +1,77 @@
+﻿@page "/transactions"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Transactions</PageTitle>
+
+<div class="admin-page">
+    <Sidebar CurrentPage="transactions" />
+
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">Transactions</h1>
+
+            <div class="user">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M170.41,132.78a68.34,68.34,0,1,0-91.12,0,97.65,97.65,0,0,0-65.38,92,11.7,11.7,0,0,0,23.39,0,74.34,74.34,0,0,1,74.26-74.27h26.88a74.34,74.34,0,0,1,74.26,74.27,11.7,11.7,0,0,0,23.39,0A97.65,97.65,0,0,0,170.41,132.78Zm-45.56-95.3A44.73,44.73,0,1,1,80.12,82.21a44.73,44.73,0,0,1,44.73-44.73Z" /></g></svg>
+                </div>
+
+                <div class="info">
+                    <h6>Group 4 Admin</h6>
+                    <p class="light">group4@prof-elec.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="header-options end">
+                <div class="group">
+                    <h6>Sort by</h6>
+
+                    <!-- Sort Transactions buttons
+                    Add an 'active' class to the button if selected.
+                    E.g. <button class="active">Date</button>
+                    -->
+                    <div class="radio-group">
+                        <button>Date</button>
+                        <button>Amount</button>
+                    </div>
+
+                    <!-- Sort Order buttons 
+                    Add an 'active' class to the button if selected.
+                    -->
+                    <div class="radio-group">
+                        <!-- Ascending button -->
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M94.44,44.2,55.14,4.9a7.27,7.27,0,0,0-10.28,0L5.56,44.2a7.28,7.28,0,0,0,0,10.29h0a7.28,7.28,0,0,0,10.29,0L42.72,27.61V90a7.28,7.28,0,0,0,14.56,0V27.61L84.15,54.49h0A7.28,7.28,0,0,0,94.44,44.2Z" /></svg></button>
+                       
+                        <!-- Descending button -->
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M5.56,55.8l39.3,39.3a7.27,7.27,0,0,0,10.28,0l39.3-39.3a7.28,7.28,0,0,0,0-10.29h0a7.28,7.28,0,0,0-10.29,0L57.28,72.39V10.05a7.28,7.28,0,1,0-14.56,0V72.39L15.85,45.51h0A7.28,7.28,0,0,0,5.56,55.8Z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="header admin-transactions-spacing labels">
+                    <p>Payment ID</p>
+                    <p>Product Method</p>
+                    <p>Date</p>
+                    <p>Amount</p>
+                </div>
+
+                <!-- Transactions List -->
+                <div class="body">
+                    <!-- Sample Transactions -->
+                    @for (int i = 0; i < 15; i++) {
+                        <TransactionsCard />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Place your code here
+}

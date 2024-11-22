@@ -1,0 +1,53 @@
+.favorites-page {
+	.favorites-section {
+		padding-top: var(--page-top-padding);
+
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			h1 {
+				font-size: 32px;
+			}
+		}
+
+		.products-grid {
+			margin-top: 32px;
+			row-gap: 32px;
+		}
+	}
+}
+
+.favorites-card {
+	border: none;
+	border-radius: 0;
+
+	.image {
+		border-radius: 12px;
+	}
+
+	.details {
+		padding: 0;
+		margin-top: 16px;
+	}
+
+	&:hover {
+		border: none;
+	}
+
+	.floating-button {
+		display: flex;
+		aspect-ratio: 1/1;
+		padding: 8px;
+
+		svg {
+			width: 12px;
+
+			line,
+			path {
+				stroke-width: 4;
+			}
+		}
+	}
+}

@@ -1,0 +1,90 @@
+.sign-in-page {
+	display: flex;
+	gap: 16px;
+	padding: 12px;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+
+	.image {
+		flex: 1;
+		background-image: url(/assets/images/bedroom.png);
+		border-radius: 20px;
+		position: relative;
+		transform: scaleX(-1);
+
+		.logo {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			width: 100%;
+			transform: scaleX(-1);
+
+			svg {
+				border-radius: 8px;
+				fill: white;
+				background-color: var(--black);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 40px;
+				padding: 8px;
+				aspect-ratio: 1/1;
+			}
+		}
+	}
+
+	.form {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		position: relative;
+
+		.sub {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			display: flex;
+			gap: 12px;
+			justify-content: center;
+			align-items: center;
+
+			a {
+				font-size: 16px;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.main {
+			padding: 164px;
+
+			h1 {
+				font-size: 42px;
+			}
+
+			.inputs {
+				margin-top: 48px;
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+
+				.input-group {
+					width: 100%;
+
+					input {
+						width: 100%;
+					}
+				}
+			}
+
+			button {
+				margin-top: 32px;
+				width: 100%;
+			}
+		}
+	}
+}

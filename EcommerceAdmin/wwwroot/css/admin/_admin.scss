@@ -1,0 +1,155 @@
+.admin-page {
+	display: flex;
+	gap: 16px;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	padding: 16px;
+	background-color: var(--gray);
+
+	.sidebar {
+		height: 100%;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		padding: 24px;
+
+		.logo {
+			display: flex;
+			gap: 12px;
+			justify-content: center;
+			align-items: center;
+
+			svg {
+				width: 32px;
+				transform: translateY(-2px);
+			}
+
+			h6 {
+				font-size: 20px;
+			}
+		}
+
+		nav {
+			flex: 1;
+			margin-top: 48px;
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			gap: 8px;
+			width: 100%;
+
+			.sub-group {
+				width: 100%;
+				display: flex;
+				gap: 8px;
+
+				span {
+					width: 1px;
+					height: 100%;
+					border-right: 2px solid var(--dark-gray);
+					margin-left: 52px;
+				}
+
+				.links {
+					display: flex;
+					flex-direction: column;
+					gap: 8px;
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	.content {
+		border-radius: 20px;
+		border: 1px solid var(--border);
+		background-color: white;
+		padding: 32px;
+		height: 100%;
+		flex: 3.5;
+		overflow: scroll;
+
+		.header {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 24px;
+
+			.user {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+
+				.icon {
+					border-radius: 100px;
+					background-color: var(--gray);
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					aspect-ratio: 1/1;
+					padding: 12px;
+
+					svg {
+						width: 24px;
+						aspect-ratio: 1/1;
+					}
+				}
+
+				.info {
+					h6 {
+						margin-bottom: 4px;
+					}
+				}
+			}
+		}
+	}
+
+	a.gray,
+	button.gray {
+		display: flex;
+		gap: 16px;
+		justify-content: start;
+		align-items: center;
+		padding: 8px 16px;
+		cursor: pointer;
+		border-radius: 8px;
+		width: 100%;
+
+		svg {
+			fill: var(--gray-text);
+		}
+
+		p {
+			color: var(--gray-text);
+		}
+
+		&.active {
+			background-color: var(--dark-gray);
+
+			p {
+				color: var(--light-black);
+			}
+
+			svg {
+				fill: var(--light-black);
+			}
+		}
+
+		&:hover {
+			background-color: var(--dark-gray);
+
+			svg {
+				fill: var(--light-black);
+			}
+
+			p {
+				color: var(--light-black);
+			}
+		}
+	}
+
+	.logout {
+		width: fit-content !important;
+	}
+}

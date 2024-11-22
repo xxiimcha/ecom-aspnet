@@ -1,0 +1,111 @@
+@font-face {
+	font-family: 'inter';
+	src: url('/fonts/Inter-VariableFont_opsz\,wght.ttf');
+	// Medium, Semibold, Bold
+	// 500, 600, 700
+}
+
+:root {
+	// Text
+	font-family: 'inter';
+	color: var(--black);
+	font-size: 14px;
+	font-weight: 600;
+
+	// Palette
+	--off-white: #fbfbfb;
+	--black: #1b1b1b;
+	--light-black: #5d5d5f;
+	--gray: #ededed;
+	--gray-text: #989898;
+	--dark-gray: #d6d6d6;
+	--border: #e0e0e0;
+	--primary: #6d78d5;
+
+	// Drop shadow
+	--primary-shadow: 0 0 20px rgba(109, 120, 213, 0.35);
+
+	// Glass
+	--glass-bg: rgba(0, 0, 0, 0.25);
+	--glass-blur: blur(24px);
+
+	// Overlay
+	--black-overlay: linear-gradient(
+		to right,
+		rgba(0, 0, 0, 0.5),
+		rgba(0, 0, 0, 0.1)
+	);
+	--darker-overlay: linear-gradient(
+		to top,
+		rgba(0, 0, 0, 0.75),
+		rgba(0, 0, 0, 0)
+	);
+	--categories-overlay: rgba(0, 0, 0, 0.5);
+
+	// Toast
+	--light-red: #f9dddc;
+	--red: #ec6b5c;
+
+	--light-green: #deefe0;
+	--green: #36c63e;
+
+	--light-yellow: #faf2dd;
+	--yellow: #e2a41b;
+
+	// Spacing
+	--side-margin: 172px;
+	--section-spacing: 96px;
+	--page-top-padding: 112px;
+}
+
+html {
+	height: 100%;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 14px;
+	font-weight: 600;
+	font-family: 'inter';
+	text-decoration: none;
+	color: var(--black);
+	transition: 0.2s ease-in-out;
+
+	// Background image
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+body {
+	width: 100vw;
+	overflow-x: hidden;
+	background-color: var(--off-white);
+}
+
+svg {
+	width: 20px;
+	aspect-ratio: 1/1;
+	fill: var(--black);
+}
+
+@import './css/components/section.scss';
+@import './css/home.scss';
+@import './css/components/input.scss';
+@import './css/components/button.scss';
+@import './css/components/text.scss';
+@import './css/nav.scss';
+@import './css/categories.scss';
+@import './css/products.scss';
+@import './css/components/card.scss';
+@import './css/favorites.scss';
+@import './css/cart.scss';
+@import './css/components/table-spacings.scss';
+@import './css/checkout.scss';
+@import './css/billing-address.scss';
+@import './css/order-placed.scss';
+@import './css/product-info.scss';
+@import './css/orders.scss';
+@import './css/sign-in.scss';

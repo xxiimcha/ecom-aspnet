@@ -1,0 +1,193 @@
+﻿@page "/product-info/{productId:int}"
+@using Ecommerce.Models
+@inject HttpClient HttpClient
+@inject NavigationManager Navigation
+@using System.Text.Json
+
+<NavBar Current=""/>
+
+<div class="product-info-page">
+    <section>
+        <button class="back" @onclick="NavigateBack">
+            <span>Back</span>
+        </button>
+    </section>
+
+    @if (IsLoading)
+    {
+        <p>Loading product details...</p>
+    }
+    else if (SelectedProduct != null)
+    {
+        <section class="main">
+            <div class="image">
+                @if (!string.IsNullOrEmpty(SelectedProduct.ImageUrl))
+                {
+                    <img src="@SelectedProduct.ImageUrl" alt="@SelectedProduct.Name" />
+                }
+                else
+                {
+                    <p><em>No image available</em></p>
+                }
+            </div>
+
+            <div class="info">
+                <div class="section table-card">
+                    <div class="header row">
+                        <div>
+                            <h6>@SelectedProduct.Name</h6>
+                            <p class="light">@SelectedProduct.ShortDescription</p>
+                        </div>
+                    </div>
+
+                    <div class="body row">
+                        <div>
+                            <p class="label">Brand</p>
+                            <p class="value">@SelectedProduct.Brand</p>
+                        </div>
+
+                        <span></span>
+
+                        <div>
+                            <p class="label">Category</p>
+                            <p class="value">@SelectedProduct.Category</p>
+                        </div>
+
+                        <span></span>
+
+                        <div>
+                            <p class="label">Type</p>
+                            <p class="value">@SelectedProduct.Type</p>
+                        </div>
+
+                        <span></span>
+
+                        <div>
+                            <p class="label">Price</p>
+                            <p class="value">₱@SelectedProduct.Price</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section outline-card">
+                    <h6 class="section-title">Dimensions</h6>
+                    <div class="dimensions">
+                        <div>
+                            <p class="value">@SelectedProduct.Dimensions</p>
+                            <p class="label light">Dimensions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section outline-card">
+                    <h6 class="section-title">Description</h6>
+                    <p class="long-description">@SelectedProduct.LongDescription</p>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <p>Product not found.</p>
+    }
+
+    <section class="divider">
+        <span></span>
+    </section>
+
+    <section class="recommended-section">
+        <h6>Recommended Products</h6>
+
+        <div class="products-grid c-4">
+            @if (RecommendedProducts != null && RecommendedProducts.Any())
+            {
+                @foreach (var recommended in RecommendedProducts)
+                {
+                    <ProductsCard ProductName="@recommended.Name" ProductPrice="@recommended.Price" ProductImage="@recommended.ImageUrl" />
+                }
+            }
+            else
+            {
+                <p>No recommended products available.</p>
+            }
+        </div>
+    </section>
+</div>
+
+@code {
+    [Parameter]
+    public int productId { get; set; }
+
+    public Product? SelectedProduct { get; set; } // Changed from Product to SelectedProduct
+    public List<Product> RecommendedProducts { get; set; } = new List<Product>();
+    public bool IsLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProductAsync();
+        await LoadRecommendedProductsAsync();
+    }
+
+    private async Task LoadProductAsync()
+    {
+        try
+        {
+            var response = await HttpClient.GetAsync($"https://prof-elec.vercel.app/products/{productId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                SelectedProduct = JsonSerializer.Deserialize<Product>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading product: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task LoadRecommendedProductsAsync()
+    {
+        try
+        {
+            var response = await HttpClient.GetAsync("https://prof-elec.vercel.app/products?limit=4");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                RecommendedProducts = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading recommended products: {ex.Message}");
+        }
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/products");
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; }
+        public string ShortDescription { get; set; }
+        public string Dimensions { get; set; }
+        public decimal Price { get; set; }
+        public string? ImageUrl { get; set; }
+        public string Brand { get; set; }
+        public string? LongDescription { get; set; }
+    }
+}

@@ -1,0 +1,99 @@
+﻿@page "/featured"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@using Ecommerce.Models
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Featured</PageTitle>
+
+<div class="admin-page">
+    <Sidebar CurrentPage="featured" />
+
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">Featured Products</h1>
+
+            <div class="user">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M170.41,132.78a68.34,68.34,0,1,0-91.12,0,97.65,97.65,0,0,0-65.38,92,11.7,11.7,0,0,0,23.39,0,74.34,74.34,0,0,1,74.26-74.27h26.88a74.34,74.34,0,0,1,74.26,74.27,11.7,11.7,0,0,0,23.39,0A97.65,97.65,0,0,0,170.41,132.78Zm-45.56-95.3A44.73,44.73,0,1,1,80.12,82.21a44.73,44.73,0,0,1,44.73-44.73Z" /></g></svg>
+                </div>
+
+                <div class="info">
+                    <h6>Group 4 Admin</h6>
+                    <p class="light">group4@prof-elec.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="header-options">
+                <!-- Search Bar -->
+                <div class="searchbar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">
+                        <defs>
+                            <style>
+                                .cls-1 {
+                                    fill-rule: evenodd;
+                                }</style>
+                        </defs>
+                        <g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M176.86,101.7A75.16,75.16,0,1,1,101.7,26.54,75.15,75.15,0,0,1,176.86,101.7Zm-13.47,73.82A96,96,0,1,1,178,160.34l63.6,66.36a10.52,10.52,0,1,1-15.2,14.56Z" /></g>
+                    </svg>
+
+                    <!-- Search input -->
+                    <input placeholder="Search products" />
+                </div>
+
+                <div class="group">
+                    <h6>Filter</h6>
+
+                    <!-- Product Filters 
+                    Add an 'active' class to the button if selected.
+                    E.g. <button class="active">All</button>
+                    -->
+                    <div class="radio-group">
+                        <button>All</button>
+                        <button>Featured</button>
+                        <button>Unfeatured</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="header admin-featured-spacing labels">
+                    <p>Product ID</p>
+                    <p>Product</p>
+                    <p>Brand</p>
+                    <p>Category</p>
+                    <p>Type</p>
+                    <p>Action</p>
+                </div>
+
+                <!-- Products List -->
+                <div class="body">
+                    @foreach (var featured in getfeaturedproducts.Where(f => f.is_featured))
+                    {
+                        
+                        <FeaturedCard productId="@featured.id"
+                                      productName="@featured.name"
+                                      productBrand="@featured.brand"
+                                      productCategory="@featured.category"
+                                      productType="@featured.type"
+                                      productImg="@featured.image_url" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Featuredproducts> getfeaturedproducts = new List<Featuredproducts>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch transactions from API
+        getfeaturedproducts = await Http.GetFromJsonAsync<List<Featuredproducts>>("https://prof-elec.vercel.app/products");
+    }
+}

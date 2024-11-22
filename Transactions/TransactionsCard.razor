@@ -1,0 +1,13 @@
+﻿@code {
+    [Parameter] public string PaymentId { get; set; }
+    [Parameter] public string PaymentMethod { get; set; }
+    [Parameter] public DateTime Date { get; set; }
+    [Parameter] public decimal Amount { get; set; }
+}
+
+<div class="card admin-transactions-spacing">
+    <p class="paymentID">@PaymentId</p>
+    <p class="payment-method">@PaymentMethod</p>
+    <p class="date">@Date.ToString("MMMM dd yyyy")</p>
+    <p class="amount">@Amount.ToString("C")</p>
+</div>

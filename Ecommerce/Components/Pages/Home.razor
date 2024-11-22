@@ -1,0 +1,84 @@
+﻿@page "/"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+<NavBar Current="Home" />
+
+<div class="home-page">
+    <section class="hero-section">
+        <div class="content">
+            <h1 class="fb">Stylish & Affordable <br /> Furniture for Every Room</h1>
+            <h6 class="fs">Discover quality pieces that transform your space without breaking the bank.</h6>
+
+            <button class="text" @onclick='() => GoTo("/products")'>Shop now</button>
+        </div>
+
+        <div class="hero-image">
+            <img src="/assets/images/Landing.png"/>
+        </div>
+
+        <div class="rounded-bleed"></div>
+    </section>
+
+    <section class="featured-section">
+        <div class="preview-container">
+            <div class="description">
+                <h6 class="fb">FEATURED</h6>
+                
+                <div class="content">
+                    <p class="light">Explore top-rated furniture pieces crafted for style and comfort.</p>
+
+                    <button @onclick='() => GoTo("/products?category=featured")'>
+                        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="-13.28" y="45.34" width="123.54" height="12.35" rx="6.18" transform="translate(-22.22 49.37) rotate(-45)" /><rect x="84.65" y="3" width="12.35" height="92.66" rx="6.18" /><rect x="4.34" y="3" width="92.66" height="12.35" rx="6.18" /></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <ProductPreview />
+            <ProductPreview />
+            <ProductPreview />
+        </div>
+    </section>
+
+    <section class="category-banners">
+        <CategoryBanner Category="living room"/>
+        <CategoryBanner Category="kitchen"/>
+    </section>
+
+    <section class="bedroom-section">
+        <div class="preview-container">
+            <div class="description">
+                <h6 class="fb">BEDROOM</h6>
+
+                <div class="content">
+                    <p class="light">Explore top-rated furniture pieces crafted for style and comfort.</p>
+
+                    <button @onclick='() => GoTo("/products?category=bedroom")'>
+                        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="-13.28" y="45.34" width="123.54" height="12.35" rx="6.18" transform="translate(-22.22 49.37) rotate(-45)" /><rect x="84.65" y="3" width="12.35" height="92.66" rx="6.18" /><rect x="4.34" y="3" width="92.66" height="12.35" rx="6.18" /></svg>
+                    </button>
+                </div>
+            </div>
+
+            <ProductPreview />
+            <ProductPreview />
+            <ProductPreview />
+        </div>
+    </section>
+
+    <section class="other-categories-section">
+        <div class="container">
+            <OtherCategory Category="bedroom"/>
+            <OtherCategory Category="dining room"/>
+            <OtherCategory Category="outdoor"/>
+        </div>
+    </section>
+</div>
+
+@code {
+    public void GoTo(string address) {
+        Navigation.NavigateTo(address);
+    }
+}

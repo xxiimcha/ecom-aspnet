@@ -1,0 +1,43 @@
+﻿<div class="card table-card">
+    <div class="header labels">
+        <!-- Order Details -->
+        <div class="date detail">
+            <p class="light">Date:</p>
+            <p class="value">September 12, 2024</p>
+        </div>
+
+        <div class="ref detail">
+            <p class="light">Ref.:</p>
+            <p class="value"># ORD098765XZ</p>
+        </div>
+
+        <!-- Change the status class of the div based on the status 
+        E.g. <div class="status detail active"> (If active)
+             <div class="status detail completed"> (If completed)
+        -->
+        <div class="status detail active">
+            <p class="light">Status:</p>
+            <p class="value">Active</p>
+        </div>
+    </div>
+
+    <!-- Order Products -->
+    <div class="body">
+        <!-- Sample Products -->
+        @for (int i = 0; i < 2; i++) {
+            <OrdersProductCard />
+        }
+    </div>
+
+    <div class="footer row">
+        <!-- Order Total -->
+        <div class="detail">
+            <p class="light">Order Total:</p>
+            <p class="value">₱1,798</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Place your code here
+}

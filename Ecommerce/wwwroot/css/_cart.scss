@@ -1,0 +1,154 @@
+.cart-page {
+	padding-top: 64px;
+	padding-bottom: var(--page-top-padding);
+
+	.page-title {
+		margin-top: 48px;
+	}
+
+	.main {
+		margin-top: 32px;
+		display: flex;
+		gap: 16px;
+
+		.cart {
+			flex: 3;
+
+			.labels {
+				text-align: center;
+
+				p:nth-child(1) {
+					text-align: left;
+				}
+			}
+
+			.card {
+				display: flex;
+				border-top: 1px solid var(--border);
+				padding: 16px 0;
+
+				.product {
+					display: flex;
+					gap: 16px;
+
+					.image {
+						width: 96px;
+						aspect-ratio: 1/1;
+						border-radius: 8px;
+						background-color: var(--gray);
+					}
+
+					.details {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+
+						.name {
+							font-size: 16px;
+						}
+
+						.brand {
+							margin-top: 4px;
+						}
+
+						.price {
+							font-size: 16px;
+							margin-top: 12px;
+						}
+					}
+				}
+
+				.quantity {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					.controller {
+						border-radius: 8px;
+						border: 1px solid var(--border);
+						display: flex;
+
+						--pad: 8px;
+
+						input {
+							width: 52px;
+							max-width: fit-content;
+							padding: var(--pad) 4px;
+							border: none;
+							outline: none;
+							box-shadow: none;
+							text-align: center;
+						}
+
+						button {
+							width: fit-content;
+							padding: var(--pad) 12px;
+
+							&:hover {
+								background-color: var(--gray);
+
+								svg {
+									line,
+									path {
+										stroke: var(--light-black);
+									}
+								}
+							}
+
+							svg {
+								width: 12px;
+
+								line,
+								path {
+									stroke: var(--gray-text);
+								}
+							}
+
+							&.minus-quantity {
+								border-right: 1px solid var(--border);
+							}
+
+							&.add-quantity {
+								border-left: 1px solid var(--border);
+							}
+						}
+					}
+				}
+
+				& > .price {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+
+				.actions {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+
+		.order-summary {
+			flex: 1;
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+
+			.table-card {
+				.body {
+					&.row {
+						gap: 16px;
+					}
+				}
+			}
+
+			a {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+	}
+}

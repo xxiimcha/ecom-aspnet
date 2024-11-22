@@ -1,0 +1,132 @@
+﻿@page "/product-info"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@using Ecommerce.Models
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<NavBar Current="" />
+
+<div class="product-info-page">
+    <section>
+        <!-- Back button -->
+        <button class="back">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="6.04" y="45.45" width="91.07" height="9.11" rx="4.55" /><rect x="-5.78" y="24.52" width="68.31" height="9.11" rx="4.55" transform="translate(-12.25 28.57) rotate(-45)" /><rect x="23.82" y="36.78" width="9.11" height="68.31" rx="4.55" transform="translate(-41.85 40.84) rotate(-45)" /></svg>
+            <span></span>
+        </button>
+    </section>
+
+    <section class="main">
+        <!-- Product image. Change the src to change the image -->
+        <div class="image">
+            <img src="https://static.wikia.nocookie.net/fine-dining-extended-universe/images/8/8c/Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.jpg" />
+        </div>
+
+        <div class="info">
+            <div class="section table-card">
+                <!-- Product details -->
+                <div class="header row">
+                    <div>
+                        <h6>Product Name</h6>
+                        <p class="light">Product Description</p>
+                    </div>
+                </div>
+
+                <div class="body row">
+                    <div>
+                        <p class="label">Brand</p>
+                        <p class="value">Brand</p>
+                    </div>
+
+                    <span></span>
+
+                    <div>
+                        <p class="label">Category</p>
+                        <p class="value">Living Room</p>
+                    </div>
+
+                    <span></span>
+
+                    <div>
+                        <p class="label">Type</p>
+                        <p class="value">Chair</p>
+                    </div>
+
+                    <span></span>
+
+                    <div>
+                        <p class="label">Price</p>
+                        <p class="value">₱899</p>
+                    </div>
+                </div>
+
+                <div class="footer row">
+                    <!-- Product Options -->
+                    <div class="actions">
+                        <button class="add-favorites outline">
+                            <p>Add to Favorites</p>
+                        </button>
+
+                        <button class="add-cart outline">
+                            <p>Add to Cart</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION SECTION -->
+            <div class="section outline-card">
+                <h6 class="section-title">Description</h6>
+                <p class="long-description">@long_description</p>
+            </div>
+        </div>
+    </section>
+    <section class="divider">
+        <span></span>
+    </section>
+
+    <!-- RECOMMENDED SECTION -->
+    <section class="recommended-section">
+        <h6>Recommended Products</h6>
+
+        <div class="products-grid c-4">
+            <!-- Sample products -->
+            @for (int i = 0; i < 4; i++)
+            {
+                <ProductsCard />
+            }
+        </div>
+    </section>
+</div>
+
+
+@code {
+    private List<productinfo> getproductinfo = new List<productinfo>();
+    public string long_description { get; set; } = "Loading description..."; // Default value
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Fetch productinfo from API
+            var products = await Http.GetFromJsonAsync<List<productinfo>>("https://prof-elec.vercel.app/products");
+
+            if (products != null && products.Count > 0)
+            {
+                // Use the first product as an example
+                var product = products.FirstOrDefault();
+                long_description = product?.long_description ?? "No description available.";
+            }
+            else
+            {
+                long_description = "Product data not available.";
+            }
+        }
+        catch (Exception ex)
+        {
+            long_description = "Failed to load product description.";
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

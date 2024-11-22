@@ -1,0 +1,71 @@
+.order-placed-page {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+
+		img {
+			width: 64px;
+			aspect-ratio: 1/1;
+		}
+
+		.page-title {
+			margin-top: 24px;
+		}
+
+		.total {
+			margin-top: 32px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 4px;
+
+			.value {
+				font-size: 24px;
+			}
+		}
+
+		.date-ref {
+			margin-top: 24px;
+		}
+
+		.order-details {
+			margin-top: 24px;
+			width: 35%;
+		}
+
+		a {
+			margin-top: 24px;
+
+			p {
+				color: var(--primary);
+			}
+
+			svg {
+				fill: var(--primary);
+			}
+
+			&:hover {
+				background-color: var(--primary);
+
+				p {
+					color: white;
+				}
+
+				svg {
+					fill: white;
+				}
+			}
+		}
+	}
+}

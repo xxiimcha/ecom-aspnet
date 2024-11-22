@@ -1,0 +1,82 @@
+.billing-address-page {
+	padding-top: 64px;
+	padding-bottom: var(--page-top-padding);
+
+	.page-title {
+		margin-top: 48px;
+	}
+
+	.main {
+		.section {
+			margin-top: 48px;
+			width: 100%;
+
+			.title {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+
+				p {
+					font-size: 16px;
+				}
+
+				span {
+					flex: 1;
+					height: 1px;
+					background-color: var(--border);
+				}
+			}
+
+			.inputs {
+				--spacing: 36px;
+
+				margin-top: 16px;
+				display: flex;
+				flex-direction: column;
+				gap: var(--spacing);
+				width: 50%;
+
+				.input-group {
+					flex: 1;
+
+					input {
+						width: 100%;
+					}
+
+					&.small {
+						flex: 0.4;
+					}
+
+					&.special {
+						.input {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							background-color: white;
+							border: 1px solid var(--border);
+							border-radius: 8px;
+
+							p {
+								padding: 8px 12px;
+								color: var(--gray-text);
+								border-right: 1px solid var(--border);
+							}
+
+							input {
+								box-shadow: none;
+								background-color: transparent;
+							}
+						}
+					}
+				}
+
+				.row {
+					display: flex;
+					gap: var(--spacing);
+					flex: 1;
+					width: 100%;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,43 @@
+﻿@page "/orders"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<NavBar Current="Orders" />
+
+<div class="orders-page">
+    <section class="orders-section">
+        <div class="header">
+            <h1 class="page-title">Orders</h1>
+
+            <div class="group">
+                <h6>Status</h6>
+
+                <!-- Status Filters 
+                Add an 'active' class to the filter button if the filter is selected.
+                E.g. <button class="active">Active</button>
+                -->
+                <div class="radio-group">
+                    <button class="active">All</button>
+                    <button>Active</button>
+                    <button>Completed</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders List -->
+        <div class="orders">
+            <!-- Sample Orders -->
+            @for (int i  = 0; i < 3; i++) {
+                <OrdersCard/>
+            }
+        </div>
+    </section>
+</div>
+
+@code {
+    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+
+    // Place your code here
+}

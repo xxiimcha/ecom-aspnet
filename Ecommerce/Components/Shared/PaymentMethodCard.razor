@@ -1,0 +1,29 @@
+﻿<!-- If the payment method is selected, add an 'active' class to the button
+E.g. <button class="card outline-card active">
+-->
+<button class="card outline-card">
+    <!-- Image -->
+    <img src="@LogoURL"/>
+
+    <!-- Payment Method Name -->
+    <p>@methodMap[Method]</p>
+</button>
+
+@code {
+    [Parameter]
+    public required string Method { get; set; }
+
+    public string LogoURL => $"/assets/images/{Uri.EscapeDataString(Method)}.png";
+
+    public Dictionary<string, string> methodMap = new Dictionary<string, string>() {
+        { "cash", "Cash" },
+        { "card", "Card" },
+        { "ubp" , "UBP" },
+        { "bpi" , "BPI" },
+        { "gcash" , "GCash" },
+        { "paymaya" , "PayMaya" },
+        { "grab_pay" , "GrabPay" }
+    };
+
+    // Place your code here
+}

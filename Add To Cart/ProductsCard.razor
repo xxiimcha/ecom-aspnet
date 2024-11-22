@@ -1,0 +1,86 @@
+﻿@using Ecommerce.Models
+@using Ecommerce.Services
+@inject CartService CartService
+
+
+
+<div class="products-container">
+    <div class="main-product-card">
+        <!-- Product Image -->
+        <div class="image" style="background-image: url('@Product?.image_url')"></div>
+
+        <!-- Product details -->
+        <div class="details">
+            <h6 class="name">@Product?.Name</h6>
+            <p class="desc light">@Product?.short_description</p>
+
+            <div class="row">
+                <p class="price">₱@Product?.Price</p>
+                @if (ShowMessage)
+                {
+                    <div class="message-box @(Message.Contains("added to cart") ? "success-message" : "error-message")">
+                        @Message
+                    </div>
+                }
+
+                <button class="add-cart" @onclick='AddToCart'><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M24.33,49a3.13,3.13,0,0,1-1.11-.21,3.25,3.25,0,0,1-1.89-4.15L34.17,10.37a3.23,3.23,0,1,1,6,2.27L27.37,46.87a3.23,3.23,0,0,1-3,2.1Z" /><path d="M88.51,34H36.44L34,40.4H88.52a1.06,1.06,0,0,1,1.07,1.08v4.06L83.17,77.59a9.67,9.67,0,0,1-9.45,7.75H26.3a9.68,9.68,0,0,1-9.46-7.75L10.42,45.32V41.47a1.06,1.06,0,0,1,1.07-1.07h15a4.13,4.13,0,0,0,.77-.13L29.59,34H11.49A7.52,7.52,0,0,0,4,41.48v3.85a7.9,7.9,0,0,0,.13,1.45l6.42,32.05A16.07,16.07,0,0,0,26.29,91.71H73.71A16.1,16.1,0,0,0,89.45,78.83l6.42-32A7.9,7.9,0,0,0,96,45.33V41.48A7.52,7.52,0,0,0,88.51,34Z" /><path d="M71.4,40.4a3.2,3.2,0,0,1-3-2.18L59.8,12.55a3.21,3.21,0,1,1,6.08-2.06l8.55,25.68a3.21,3.21,0,0,1-2,4.06,2.8,2.8,0,0,1-1,.17Z" /><path d="M56.42,57.52H43.58a3.21,3.21,0,0,1,0-6.42H56.42a3.21,3.21,0,0,1,0,6.42Z" /></svg></button>
+
+                <button class="remove-cart"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M235.83,82.55,111.38,207a29.54,29.54,0,0,1-41.51,0L14.58,151.66a29.32,29.32,0,0,1,41.47-41.47l34.56,34.59L194.35,41.05a29.52,29.52,0,0,1,41.48,0A29.56,29.56,0,0,1,235.83,82.55Z" /></g></svg></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public ProductModel? Product { get; set; }
+    [Parameter] public string? UserID {get; set;}
+    [Parameter] public string? Message { get; set; }
+    private bool ShowMessage { get; set; }
+
+    public void ShowMessageBox()
+    {
+        ShowMessage = true;
+        StateHasChanged(); 
+        
+        Task.Delay(2000).ContinueWith(_ =>
+        {
+            ShowMessage = false;
+            InvokeAsync(StateHasChanged); 
+        });
+    }
+    
+    private async Task AddToCart()
+    {
+        if(Product?.Id != null && Product.Price > 0)
+        {
+            Console.WriteLine($"Adding product with ID: {Product.Id} to cart");
+            string userID = "test_user_1";
+            
+            var cartItem = new CartItemModel
+            {
+                product_id = Product.Id,
+                UserID = UserID,
+                quantity = 1,
+                Price = Product.Price ?? 0
+            };
+
+            try 
+            {
+                await CartService.AddToCart(Product.Id, userID);
+                Message = "Successfully added to cart!";
+                ShowMessageBox();
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message.Contains("Product already in cart!") ? "Item already in cart" : $"Failed to add item to cart. {ex.Message}");
+                Message = "Item is already in your cart!"; 
+                ShowMessageBox();
+            }
+        }
+        else 
+        {
+            Console.WriteLine("Error: Product or Product.Id is null. Cannot add to cart");
+            Message = "Error: Unable to add product to cart."; 
+        }
+    }
+}   

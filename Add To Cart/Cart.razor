@@ -1,0 +1,126 @@
+﻿@page "/cart"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@using Ecommerce.Services
+@inject CartService CartService
+@inject NavigationManager Navigation
+@using Ecommerce.Models
+@using System.Text.Json
+@inject HttpClient Http
+@using System.Linq
+
+
+<section class="cart-page">
+    <!-- Back button -->
+    <button class="back" @onclick='() => GoTo("/products")'>
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="6.04" y="45.45" width="91.07" height="9.11" rx="4.55" /><rect x="-5.78" y="24.52" width="68.31" height="9.11" rx="4.55" transform="translate(-12.25 28.57) rotate(-45)" /><rect x="23.82" y="36.78" width="9.11" height="68.31" rx="4.55" transform="translate(-41.85 40.84) rotate(-45)" /></svg>
+        <span></span>
+    </button>
+
+    <h1 class="page-title">Shopping Cart</h1>
+
+    <div class="main">
+        <div class="cart table-card">
+            <div class="header cart-table-spacing labels">
+                <p>Product</p>
+                <p>Quantity</p>
+                <p>Total</p>
+                <p></p>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="body">
+                <!-- Sample Products -->
+                @if(cartItems != null && cartItems.Any())
+                {
+                    @foreach (var item in cartItems)
+                    {
+                        <CartItem Item="item" UserID="@userID" ProductId="item.Id" OnRemove="RemoveFromCart" />
+                    }
+                } else 
+                {
+                    <p>Your Cart Is Empty!</p>
+                }
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <div class="table-card">
+                <div class="header row">
+                    <h6 class="title">Order Summary</h6>
+                </div>
+
+                <div class="body row">
+                    <div>
+                        <p class="label">Items</p>
+                        <p class="value">@cartItems?.Count</p>
+                    </div>
+
+                    <div>
+                        <p class="label">Subtotal</p>
+                        <p class="value">@subtotal</p>
+                    </div>
+
+                    <div>
+                        <p class="label">Shipping Fee</p>
+                        <p class="value">₱59</p>
+                    </div>
+                </div>
+
+                <div class="footer row">
+                    <p class="label">Total</p>
+                    <p class="value">₱@(subtotal + 59)</p>
+                </div>
+            </div>
+
+            <!-- Proceed to Checkout Button -->
+            <a class="primary" href="/checkout">Checkout</a>
+        </div>
+    </div>
+</section>
+
+@code {
+    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+    private decimal subtotal;
+    private List<CartItemModel>? cartItems;
+    
+
+    // Place your code here
+    protected override async Task OnInitializedAsync()
+    {
+        cartItems = await CartService.GetCartItemsAsync(userID);
+        UpdateSubtotal();
+    }
+
+    private void UpdateSubtotal()
+    {
+        subtotal = cartItems?.Sum(item => item.Price * item.quantity) ?? 0;
+    }
+    private void HandleQuantityChange(CartItemModel updatedItem)
+    {
+        var item = cartItems?.FirstOrDefault(i => i.Id == updatedItem.Id);
+        if (item != null)
+        {
+            item.quantity = updatedItem.quantity;
+        }
+
+        UpdateSubtotal();
+    }
+    private async Task RemoveFromCart(int itemId)
+    {
+        cartItems = cartItems?.Where(item => item.Id != itemId).ToList();
+
+        UpdateSubtotal();
+
+        await CartService.RemoveFromCart(itemId, userID);
+
+        StateHasChanged();
+    }
+
+    private void GoTo(string address)
+    {
+        Navigation.NavigateTo(address);
+    }
+}

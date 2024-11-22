@@ -1,0 +1,152 @@
+﻿@page "/checkout"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+
+<section class="checkout-page">
+    <!-- Back button -->
+    <button class="back">
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="6.04" y="45.45" width="91.07" height="9.11" rx="4.55" /><rect x="-5.78" y="24.52" width="68.31" height="9.11" rx="4.55" transform="translate(-12.25 28.57) rotate(-45)" /><rect x="23.82" y="36.78" width="9.11" height="68.31" rx="4.55" transform="translate(-41.85 40.84) rotate(-45)" /></svg>
+        <span></span>
+    </button>
+        
+    <h1 class="page-title">Checkout</h1>
+
+    <div class="main">
+        <div class="section billing-address">
+            <h6 class="title">Billing Address</h6>
+
+            <div class="content">
+                <!-- Billing Addresses -->
+                <div class="container">
+                    <!-- Sample Billing Addresses -->
+                    @for (int i = 0; i < 2; i++) {
+                        <BillingAddressCard />
+                    }
+                </div>
+
+                <!-- Add New Billing Address button -->
+                <a class="add-address" href="/billing-address">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15.807" height="15.807" viewBox="0 0 15.807 15.807">
+                        <g id="Group_193" data-name="Group 193" transform="translate(1.5 1.5)">
+                            <line id="Line_1" data-name="Line 1" y2="12.807" transform="translate(6.404)" fill="none" stroke="#503fac" stroke-linecap="round" stroke-width="3" />
+                            <line id="Line_2" data-name="Line 2" x2="12.807" transform="translate(0 6.404)" fill="none" stroke="#503fac" stroke-linecap="round" stroke-width="3" />
+                        </g>
+                    </svg>
+
+                    <p>Add new address</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="section payment-method">
+            <h6 class="title">Payment Method</h6>
+            <div class="container">
+                <!-- Payment Methods -->
+                @foreach (string method in paymentMethods) {
+                    <PaymentMethodCard Method="@method"/>
+                }
+            </div>
+        </div>
+
+        <div class="section card-details">
+            <h6 class="title">Card Details</h6>
+
+            <!-- Card Details input -->
+            <div class="card-inputs">
+                <div class="input-group">
+                    <p class="label light">Card Number</p>
+                    <input type="number" placeholder="4343434343434345">
+                </div>
+
+                <div class="row">
+                    <div class="input-group">
+                        <p class="label light">Expiration Date</p>
+                        <input type="text" placeholder="MM / YYYY">
+                    </div>
+
+                    <div class="input-group">
+                        <p class="label light">CVC</p>
+                        <input type="number" placeholder="123">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Details-->
+        <div class="section order-details">
+            <div class="table-card">
+                <div class="header row">
+                    <h6 class="title">Order Details</h6>
+                </div>
+
+                <div class="body row">
+                    <div class="billing-address">
+                        <p class="label">Billing Address</p>
+
+                        <!-- Selected Billing Address -->
+                        <div class="value">
+                            <p>Name</p>
+                            <p>Address Line 1</p>
+                            <p>Address Line 2</p>
+                            <p>City, Postal Code</p>
+                            <p>Email Address ∙ Phone Number</p>
+                        </div>
+                    </div>
+
+                    <span></span>
+
+                    <!-- Selected Payment Method -->
+                    <div>
+                        <p class="label">Payment Method</p>
+                        <p class="value">GCash</p>
+                    </div>
+
+                    <span></span>
+
+                    <div class="products">
+                        <p class="label">Products</p>
+
+                        <!-- Order Products -->
+                        <div class="value checkout-products">
+                            <!-- Sample Products -->
+                            @for (int i = 0; i < 2; i++) {
+                                <CheckoutProductCard />
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Other Details -->
+                    <div>
+                        <p class="label">Subtotal</p>
+                        <p class="value">₱1,798</p>
+                    </div>
+
+                    <div>
+                        <p class="label">Shipping Fee</p>
+                        <p class="value">₱59</p>
+                    </div>
+                </div>
+
+                <!-- Order Total -->
+                <div class="footer row">
+                    <p class="label">Total</p>
+                    <div class="value">₱1,989</div>
+                </div>
+            </div>
+
+            <!-- Place Order button -->
+            <button class="primary">Place Order</button>
+        </div>
+    </div>
+</section>
+
+@code {
+    public List<string> paymentMethods = new List<string>() {
+        "cash", "card", "gcash", "grab_pay", "paymaya", "bpi", "ubp"    
+    };
+
+    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+
+    // Place your code here
+}

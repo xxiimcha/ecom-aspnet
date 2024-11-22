@@ -1,0 +1,41 @@
+.sign-in-page {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+
+	.logo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		svg {
+			fill: var(--black);
+			width: 36px;
+		}
+	}
+
+	h1 {
+		margin-top: 24px;
+		font-size: 32px;
+	}
+
+	.inputs {
+		margin-top: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		input {
+			width: 296px;
+		}
+	}
+
+	button {
+		margin-top: 24px;
+		width: 296px;
+	}
+}

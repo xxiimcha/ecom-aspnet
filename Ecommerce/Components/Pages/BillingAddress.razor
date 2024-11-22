@@ -1,0 +1,122 @@
+﻿@page "/billing-address"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+
+<section class="billing-address-page">
+    <!-- Back button -->
+    <button class="back" href="/checkout"> 
+        <span></span>
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="6.04" y="45.45" width="91.07" height="9.11" rx="4.55" /><rect x="-5.78" y="24.52" width="68.31" height="9.11" rx="4.55" transform="translate(-12.25 28.57) rotate(-45)" /><rect x="23.82" y="36.78" width="9.11" height="68.31" rx="4.55" transform="translate(-41.85 40.84) rotate(-45)" /></svg>
+    </button>
+
+    <h1 class="page-title">Add billing address</h1>
+
+    <div class="main">
+        <div class="section">
+            <div class="title">
+                <h6>Personal Information</h6>
+
+                <span></span>
+            </div>
+
+            <div class="inputs">
+                <div class="row">
+                    <div class="input-group">
+                        <p class="label light">First Name</p>
+
+                        <!-- First Name input -->
+                        <input type="name" placeholder="John">
+                    </div>
+
+                    <div class="input-group">
+                        <p class="label light">Last Name</p>
+
+                        <!-- Last Name input -->
+                        <input type="name" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-group">
+                        <p class="label light">Email Address</p>
+
+                        <!-- Email input -->
+                        <input type="email" placeholder="john@example.com">
+                    </div>
+
+                    <div class="input-group special">
+                        <p class="label light">Phone Number</p>
+
+                        <div class="input">
+                            <p>+63</p>
+
+                            <!-- Phone Number input -->
+                            <input type="name" placeholder="9123456789">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h6>Address</h6>
+
+                <span></span>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <p class="label light">Address Line 1</p>
+
+                    <!-- Address Line 1 input -->
+                    <input type="name" placeholder="Address Line 1">
+                </div>
+
+                <div class="input-group">
+                    <p class="label light">Address Line 2</p>
+
+                    <!-- Address Line 2 input -->
+                    <input type="name" placeholder="Address Line 2">
+                </div>
+                
+
+                <div class="row">
+                    <div class="input-group">
+                        <p class="label light">City</p>
+
+                        <!-- City input -->
+                        <input type="name" placeholder="City">
+                    </div>
+
+                    <div class="input-group small">
+                        <p class="label light">Postal Code</p>
+
+                        <!-- Postal Code input -->
+                        <input type="number" placeholder="1234">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <span></span>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <!-- Save Billing Address button -->
+            <button class="primary">Save billing address</button>
+        </div>
+    </div>
+
+</section>
+
+@code {
+    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+
+    // Place your code here
+}

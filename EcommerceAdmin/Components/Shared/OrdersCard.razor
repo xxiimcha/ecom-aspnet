@@ -1,0 +1,39 @@
+﻿<div class="card admin-table-product admin-orders-spacing">
+    <!-- Order status 
+    Change the status of h5 accordingly.
+
+    E.g. <h5 class="active">Active</h5> (Active)
+    E.g. <h5 class="completed">Completed</h5> (Completed)
+    -->
+    <div class="status">
+        <h5 class="active">Active</h5>
+    </div>
+
+    <!-- Order Details -->
+    <p class="ref-num">#ORD0032xz</p>
+    <p class="date">September 12, 2024</p>
+    <p class="item-qty">4</p>
+    <p class="total">₱4,978</p>
+
+    <!-- Options button 
+    If the order is already completed, add a 'disabled' class to the button.
+    E.g. <button class="options disabled">
+    -->
+    <button class="options"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M15.53,61.51A11.53,11.53,0,1,1,27.06,50,11.53,11.53,0,0,1,15.53,61.51" /><path d="M50,61.51A11.53,11.53,0,1,1,61.52,50,11.54,11.54,0,0,1,50,61.51" /><path d="M72.91,50a11.52,11.52,0,1,0,3.38-8.16A11.53,11.53,0,0,0,72.91,50Z" /></svg></button>
+
+    <!-- Options menu -->
+    <div class="options-menu">
+
+        <!-- Complete Order button -->
+        <button class="complete">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M235.83,82.55,111.38,207a29.54,29.54,0,0,1-41.51,0L14.58,151.66a29.32,29.32,0,0,1,41.47-41.47l34.56,34.59L194.35,41.05a29.52,29.52,0,0,1,41.48,0A29.56,29.56,0,0,1,235.83,82.55Z" /></g></svg>
+            
+            <p>Complete Order</p>
+        </button>
+    </div>
+</div>
+
+
+@code {
+    // Place your code here
+}

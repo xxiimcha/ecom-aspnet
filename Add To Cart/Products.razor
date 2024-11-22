@@ -1,0 +1,148 @@
+﻿@page "/products"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@using Ecommerce.Models
+@inject ProductService ProductService
+@using Ecommerce.Services
+
+
+
+<NavBar Current="Products"/>
+
+<div class="products-page">
+    <!-- HEADER SECTION -->
+    <section class="header">
+        <!-- 
+        Change Category Name and background-image URL.
+        Images are located in /wwwroot/assets/images. But when getting an image, you don't have to include /wwwroot.
+        -->
+        <h1>Category Name</h1>
+        <div class="oval" style="background-image: url('/assets/images/living room.png')">
+            <div class="overlay"></div>
+        </div>
+    </section>
+
+    <section class="content">
+        <!-- SIDEBAR -->
+        <div class="sidebar outline-card">
+            <div class="categories">
+                <!-- Categories -->
+                <h6>Category</h6>
+
+                <!-- 
+                Add an 'active' class to the button if the categry is selected 
+                E.g. <button class="active">Living Room</button> 
+                -->
+                <div class="options">
+                    <button>All</button>
+                    <button>Featured</button>
+                    <button>Living Room</button>
+                    <button>Bedroom</button>
+                    <button>Kitchen</button>
+                    <button>Dining Room</button>
+                    <button>Outdoor</button>
+
+                </div>
+            </div>
+
+            <span></span>
+
+            <!-- Filters -->
+            <div class="filters">
+                <h6>Filter by:</h6>
+
+                <!-- Type Filter -->
+                <div class="type-filter">
+                    <h6>Type</h6>
+
+                    <div class="options">
+                        <!-- Sample Type Checkboxes -->
+                        @for (int i = 0; i < 3; i++) {
+                            <FilterTypeCheckbox />
+                        }
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="price-filter">
+                    <h6>Price</h6>
+
+                    <div class="input">
+                        <input placeholder="Minimum" />
+                        <span></span>
+                        <input placeholder="Maximum" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="actions">
+                <!-- Apply Filter button -->
+                <button class="primary black">Apply</button>
+
+                <!-- Clear Filters button -->
+                <button class="outline">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M17.17,34.12v42C17.17,88,25.51,97,36.57,97H63.43c11.06,0,19.4-9,19.4-20.89v-42a8.95,8.95,0,0,0-1.5-17.77h-12A14.85,14.85,0,0,0,54.56,3H45.44A14.85,14.85,0,0,0,30.68,16.35h-12a8.95,8.95,0,0,0-1.5,17.77ZM63.43,91H36.57c-7.78,0-13.43-6.27-13.43-14.92V34.25H76.86V76.11C76.86,84.76,71.21,91,63.43,91ZM45.44,9h9.12a8.87,8.87,0,0,1,8.73,7.38H36.71A8.87,8.87,0,0,1,45.44,9ZM18.67,22.31H81.33a3,3,0,1,1,0,6H18.67a3,3,0,1,1,0-6Z" /><path d="M60.44,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,60.44,43.29Z" /><path d="M39.56,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,39.56,43.29Z" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="header-options">
+                <!-- Search Bar -->
+                <div class="searchbar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M176.86,101.7A75.16,75.16,0,1,1,101.7,26.54,75.15,75.15,0,0,1,176.86,101.7Zm-13.47,73.82A96,96,0,1,1,178,160.34l63.6,66.36a10.52,10.52,0,1,1-15.2,14.56Z" /></g></svg>
+                
+                    <!-- Input for the search bar -->
+                    <input placeholder="Search products"/>
+                </div>
+
+                <!-- Sort Products Buttons -->
+                <div class="group">
+                    <h6>Sort by</h6>
+
+                    <!-- Add an 'active' class to the button if selected -->
+                    <div class="radio-group">
+                        <button>Name</button>
+                        <button>Price</button>
+                    </div>
+
+                    <!-- Add an 'active' class to the button if selected -->
+                    <div class="radio-group">
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="45.45" y="6.04" width="9.11" height="91.07" rx="4.55" /><rect x="66.38" y="-5.78" width="9.11" height="68.31" rx="4.55" transform="translate(0.71 58.46) rotate(-45)" /><rect x="-5.08" y="23.82" width="68.31" height="9.11" rx="4.55" transform="translate(-11.55 28.87) rotate(-45)" /></svg></button>
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="45.45" y="2.89" width="9.11" height="91.07" rx="4.55" /><rect x="24.52" y="37.48" width="9.11" height="68.31" rx="4.55" transform="translate(-42.14 41.54) rotate(-45)" /><rect x="36.78" y="67.08" width="68.31" height="9.11" rx="4.55" transform="translate(-29.88 71.13) rotate(-45)" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products List -->
+            <div class="products products-grid c-3">
+                <!-- Sample products -->
+                @if (products != null)
+                {
+                    @foreach (var product in products)
+                    {
+                        <ProductsCard Product="product"  UserID="userID" />
+                    }
+                }
+                else
+                {
+                    <p>Loading products...</p>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+
+    // Place your code here
+    private List<ProductModel>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+}

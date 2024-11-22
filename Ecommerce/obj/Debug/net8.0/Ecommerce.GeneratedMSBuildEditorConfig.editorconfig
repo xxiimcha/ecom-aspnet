@@ -1,0 +1,143 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Ecommerce
+build_property.RootNamespace = Ecommerce
+build_property.ProjectDir = E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/BillingAddress.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCaWxsaW5nQWRkcmVzcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Cart.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXJ0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Categories.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yaWVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Checkout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDaGVja291dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Favorites.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xGYXZvcml0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/OrderPlaced.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlclBsYWNlZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Orders.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/ProductInfo.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0SW5mby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/SignIn.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaWduSW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Pages/SignUp.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaWduVXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/BillingAddressCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQmlsbGluZ0FkZHJlc3NDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/CartItem.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ2FydEl0ZW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/CheckoutProductCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ2hlY2tvdXRQcm9kdWN0Q2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/FavoritesCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcRmF2b3JpdGVzQ2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/FilterTypeCheckbox.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcRmlsdGVyVHlwZUNoZWNrYm94LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/Misc/CategoryBanner.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTWlzY1xDYXRlZ29yeUJhbm5lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/Misc/CategoryCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTWlzY1xDYXRlZ29yeUNhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/Misc/NavBar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTWlzY1xOYXZCYXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/Misc/OtherCategory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTWlzY1xPdGhlckNhdGVnb3J5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/Misc/ProductPreview.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTWlzY1xQcm9kdWN0UHJldmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/OrdersCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcT3JkZXJzQ2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/OrdersProductCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcT3JkZXJzUHJvZHVjdENhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/PaymentMethodCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcUGF5bWVudE1ldGhvZENhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Shared/ProductsCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcUHJvZHVjdHNDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-kq1tvjl1y7
+
+[E:/Commissions/Prof Elec 4 (E-commerce Project)/Ecommerce/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-agoarpsld3

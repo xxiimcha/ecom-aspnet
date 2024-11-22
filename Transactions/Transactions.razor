@@ -1,0 +1,126 @@
+﻿@page "/transactions"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@using Ecommerce.Models
+@inject HttpClient Http
+
+<PageTitle>Transactions</PageTitle>
+
+<div class="admin-page">
+     <Sidebar CurrentPage="transactions"/>
+
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">Transactions</h1>
+
+            <div class="user">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M170.41,132.78a68.34,68.34,0,1,0-91.12,0,97.65,97.65,0,0,0-65.38,92,11.7,11.7,0,0,0,23.39,0,74.34,74.34,0,0,1,74.26-74.27h26.88a74.34,74.34,0,0,1,74.26,74.27,11.7,11.7,0,0,0,23.39,0A97.65,97.65,0,0,0,170.41,132.78Zm-45.56-95.3A44.73,44.73,0,1,1,80.12,82.21a44.73,44.73,0,0,1,44.73-44.73Z" /></g></svg>
+                </div>
+
+                <div class="info">
+                    <h6>Group 4 Admin</h6>
+                    <p class="light">group4@prof-elec.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="header-options end">
+                <div class="group">
+                    <h6>Sort by</h6>
+
+                    <!-- Sort Transactions buttons
+                    Add an 'active' class to the button if selected.
+                    E.g. <button class="active">Date</button>
+                    -->
+                    <div class="radio-group">
+                        <button class="active">Date</button>
+                        <button class="active">Ammount</button>
+                        <!--<button @onclick="() => SortTransactions(" Date")" class="@GetActiveClass("Date")">Date</button>-->
+                        <!--<button @onclick="() => SortTransactions(" Amount")" class="@GetActiveClass("Amount")">Amount</button>-->
+                    </div>
+
+                    <div class="radio-group">
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M94.44,44.2,55.14,4.9a7.27,7.27,0,0,0-10.28,0L5.56,44.2a7.28,7.28,0,0,0,0,10.29h0a7.28,7.28,0,0,0,10.29,0L42.72,27.61V90a7.28,7.28,0,0,0,14.56,0V27.61L84.15,54.49h0A7.28,7.28,0,0,0,94.44,44.2Z" /></svg></button>
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M5.56,55.8l39.3,39.3a7.27,7.27,0,0,0,10.28,0l39.3-39.3a7.28,7.28,0,0,0,0-10.29h0a7.28,7.28,0,0,0-10.29,0L57.28,72.39V10.05a7.28,7.28,0,1,0-14.56,0V72.39L15.85,45.51h0A7.28,7.28,0,0,0,5.56,55.8Z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="table-card">
+                <div class="header admin-transactions-spacing labels">
+                    <p>Payment ID</p>
+                    <p>Method</p>
+                    <p>Date</p>
+                    <p>Amount</p>
+                </div>
+
+                <div class="body">
+                    @foreach (var transaction in gettransactions)
+                    {
+                        <TransactionsCard 
+                            PaymentId="@transaction.payment_id"
+                            PaymentMethod="@transaction.payment_method"
+                            Date="@transaction.Date"
+                            Amount="@transaction.Amount" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Transaction> gettransactions = new List<Transaction>();
+    private string sortBy = "Date";
+    private bool isAscending = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch transactions from API 
+        gettransactions = await Http.GetFromJsonAsync<List<Transaction>>("https://prof-elec.vercel.app/transactions");
+    }
+
+    private void SortTransactions(string criteria)
+    {
+        // Check if the same criteria is selected to toggle order
+        if (sortBy == criteria)
+        {
+            isAscending = !isAscending;
+        }
+        else
+        {
+            sortBy = criteria;
+            isAscending = true; // Default to ascending when changing criteria
+        }
+
+        // Sort the list based on selected criteria and order
+        if (sortBy == "Date")
+        {
+            gettransactions = isAscending
+                ? gettransactions.OrderBy(t => t.Date).ToList()
+                : gettransactions.OrderByDescending(t => t.Date).ToList();
+        }
+        else if (sortBy == "Amount")
+        {
+            gettransactions = isAscending
+                ? gettransactions.OrderBy(t => t.Amount).ToList()
+                : gettransactions.OrderByDescending(t => t.Amount).ToList();
+        }
+    }
+
+    private string GetActiveClass(string criteria)
+    {
+        return sortBy == criteria ? "active" : "";
+    }
+
+    private void SortOrder(bool ascending)
+    {
+        isAscending = ascending;
+        SortTransactions(sortBy); // Reapply sorting after changing order
+    }
+
+}

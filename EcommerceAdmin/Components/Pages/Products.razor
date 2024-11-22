@@ -1,0 +1,110 @@
+﻿@page "/"
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Products</PageTitle>
+
+<div class="admin-page">
+    <Sidebar CurrentPage="products" />
+
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">Products</h1>
+
+            <div class="user">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M170.41,132.78a68.34,68.34,0,1,0-91.12,0,97.65,97.65,0,0,0-65.38,92,11.7,11.7,0,0,0,23.39,0,74.34,74.34,0,0,1,74.26-74.27h26.88a74.34,74.34,0,0,1,74.26,74.27,11.7,11.7,0,0,0,23.39,0A97.65,97.65,0,0,0,170.41,132.78Zm-45.56-95.3A44.73,44.73,0,1,1,80.12,82.21a44.73,44.73,0,0,1,44.73-44.73Z" /></g></svg>
+                </div>
+
+                <div class="info">
+                    <h6>Group 4 Admin</h6>
+                    <p class="light">group4@prof-elec.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="header-options">
+                <!-- Search Bar -->
+                <div class="searchbar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">
+                        <defs>
+                            <style>
+                                .cls-1 {
+                                    fill-rule: evenodd;
+                                }</style>
+                        </defs>
+                        <g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M176.86,101.7A75.16,75.16,0,1,1,101.7,26.54,75.15,75.15,0,0,1,176.86,101.7Zm-13.47,73.82A96,96,0,1,1,178,160.34l63.6,66.36a10.52,10.52,0,1,1-15.2,14.56Z" /></g>
+                    </svg>
+
+                    <!-- Search input -->
+                    <input placeholder="Search products" />
+                </div>
+
+                <div class="group">
+                    <h6>Sort by</h6>
+
+                    <!-- Sort By buttons 
+                    Add an 'active' class to the button if selected.
+                    E.g. <button class="active">Name</button>
+                    -->
+                    <div class="radio-group">
+                        <button>Name</button>
+                        <button>Price</button>
+                        <button>Stock</button>
+                    </div>
+
+                    <!-- Sort order 
+                    Add an 'active' class to the button if selected.
+                    -->
+                    <div class="radio-group">
+                        <!-- Ascending button -->
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M94.44,44.2,55.14,4.9a7.27,7.27,0,0,0-10.28,0L5.56,44.2a7.28,7.28,0,0,0,0,10.29h0a7.28,7.28,0,0,0,10.29,0L42.72,27.61V90a7.28,7.28,0,0,0,14.56,0V27.61L84.15,54.49h0A7.28,7.28,0,0,0,94.44,44.2Z" /></svg></button>
+                        
+                        <!-- Descending button -->
+                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M5.56,55.8l39.3,39.3a7.27,7.27,0,0,0,10.28,0l39.3-39.3a7.28,7.28,0,0,0,0-10.29h0a7.28,7.28,0,0,0-10.29,0L57.28,72.39V10.05a7.28,7.28,0,1,0-14.56,0V72.39L15.85,45.51h0A7.28,7.28,0,0,0,5.56,55.8Z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <!-- Add product button -->
+                    <a class="add-product primary" href="/add-product">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15.807" height="15.807" viewBox="0 0 15.807 15.807">
+                            <g id="Group_193" data-name="Group 193" transform="translate(1.5 1.5)">
+                                <line id="Line_1" data-name="Line 1" y2="12.807" transform="translate(6.404)" fill="none" stroke="#503fac" stroke-linecap="round" stroke-width="3" />
+                                <line id="Line_2" data-name="Line 2" x2="12.807" transform="translate(0 6.404)" fill="none" stroke="#503fac" stroke-linecap="round" stroke-width="3" />
+                            </g>
+                        </svg>
+
+                        <p>Add new product</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="header admin-products-spacing labels">
+                    <p>Product ID</p>
+                    <p>Product</p>
+                    <p>Category</p>
+                    <p>Price</p>
+                    <p>Stock</p>
+                    <p>Action</p>
+                </div>
+
+                <!-- Products List -->
+                <div class="body">
+                    <!-- Sample Products -->
+                    @for (int i = 0; i < 15; i++) {
+                        <ProductsCard/>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Place your code here
+}

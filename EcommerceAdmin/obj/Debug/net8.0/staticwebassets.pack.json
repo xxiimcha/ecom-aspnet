@@ -1,0 +1,341 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Ecommerce.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Ecommerce.bundle.scp.css"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\app.css.map",
+      "PackagePath": "staticwebassets\\app.css.map"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\app.scss",
+      "PackagePath": "staticwebassets\\app.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Add.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Add.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Down Thick-34.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Down Thick-34.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Down-07.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Down-07.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Left-07.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Left-07.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Up Right-01.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Up Right-01.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Up Thick-33.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Up Thick-33.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Arrow Up-07.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Arrow Up-07.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Bill-11.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Bill-11.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Card-12.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Card-12.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Cart 2-15.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Cart 2-15.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Check-05.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Check-05.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Chevron Left-34.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Chevron Left-34.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Chevron Right-33.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Chevron Right-33.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Contacts-10.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Contacts-10.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Heart Fill-25.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Heart Fill-25.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Heart-05.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Heart-05.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Image-22.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Image-22.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Location Outline-09.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Location Outline-09.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Location-08.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Location-08.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Logo-18.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Logo-18.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Logout-33.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Logout-33.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Options-21.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Options-21.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Orders-19.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Orders-19.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Pencil-50.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Pencil-50.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Products-16.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Products-16.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Search-07.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Search-07.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Shopping Bag-14.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Shopping Bag-14.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Star Fill-24.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Star Fill-24.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Star Outline-23.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Star Outline-23.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Transactions-20.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Transactions-20.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Trash Can-06.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Trash Can-06.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\User-27.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\User-27.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\Wallet-13.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\Wallet-13.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\close.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\close.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\icons\\minus.svg",
+      "PackagePath": "staticwebassets\\assets\\icons\\minus.svg"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\Landing.png",
+      "PackagePath": "staticwebassets\\assets\\images\\Landing.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\Order Placed.png",
+      "PackagePath": "staticwebassets\\assets\\images\\Order Placed.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\bathroom.png",
+      "PackagePath": "staticwebassets\\assets\\images\\bathroom.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\bedroom.png",
+      "PackagePath": "staticwebassets\\assets\\images\\bedroom.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\bpi.png",
+      "PackagePath": "staticwebassets\\assets\\images\\bpi.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\card.png",
+      "PackagePath": "staticwebassets\\assets\\images\\card.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\cash.png",
+      "PackagePath": "staticwebassets\\assets\\images\\cash.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\dining room.png",
+      "PackagePath": "staticwebassets\\assets\\images\\dining room.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\gcash.png",
+      "PackagePath": "staticwebassets\\assets\\images\\gcash.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\grab_pay.png",
+      "PackagePath": "staticwebassets\\assets\\images\\grab_pay.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\kitchen.png",
+      "PackagePath": "staticwebassets\\assets\\images\\kitchen.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\living room.png",
+      "PackagePath": "staticwebassets\\assets\\images\\living room.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\outdoor.png",
+      "PackagePath": "staticwebassets\\assets\\images\\outdoor.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\paymaya.png",
+      "PackagePath": "staticwebassets\\assets\\images\\paymaya.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\assets\\images\\ubp.png",
+      "PackagePath": "staticwebassets\\assets\\images\\ubp.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_billing-address.scss",
+      "PackagePath": "staticwebassets\\css\\_billing-address.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_cart.scss",
+      "PackagePath": "staticwebassets\\css\\_cart.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_categories.scss",
+      "PackagePath": "staticwebassets\\css\\_categories.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_checkout.scss",
+      "PackagePath": "staticwebassets\\css\\_checkout.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_favorites.scss",
+      "PackagePath": "staticwebassets\\css\\_favorites.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_home.scss",
+      "PackagePath": "staticwebassets\\css\\_home.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_nav.scss",
+      "PackagePath": "staticwebassets\\css\\_nav.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_order-placed.scss",
+      "PackagePath": "staticwebassets\\css\\_order-placed.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_orders.scss",
+      "PackagePath": "staticwebassets\\css\\_orders.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_product-info.scss",
+      "PackagePath": "staticwebassets\\css\\_product-info.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_products.scss",
+      "PackagePath": "staticwebassets\\css\\_products.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\_sign-in.scss",
+      "PackagePath": "staticwebassets\\css\\_sign-in.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\admin\\_add_product.scss",
+      "PackagePath": "staticwebassets\\css\\admin\\_add_product.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\admin\\_admin.scss",
+      "PackagePath": "staticwebassets\\css\\admin\\_admin.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\admin\\_products.scss",
+      "PackagePath": "staticwebassets\\css\\admin\\_products.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\admin\\_sign-in.scss",
+      "PackagePath": "staticwebassets\\css\\admin\\_sign-in.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_button.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_button.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_card.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_card.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_input.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_input.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_section.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_section.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_table-spacings.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_table-spacings.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\css\\components\\_text.scss",
+      "PackagePath": "staticwebassets\\css\\components\\_text.scss"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "E:\\Commissions\\EcommerceAdmin\\wwwroot\\fonts\\Inter-VariableFont_opsz,wght.ttf",
+      "PackagePath": "staticwebassets\\fonts\\Inter-VariableFont_opsz,wght.ttf"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Ecommerce.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Ecommerce.props",
+      "PackagePath": "build\\Ecommerce.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Ecommerce.props",
+      "PackagePath": "buildMultiTargeting\\Ecommerce.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Ecommerce.props",
+      "PackagePath": "buildTransitive\\Ecommerce.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

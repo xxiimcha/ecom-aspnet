@@ -1,0 +1,368 @@
+﻿@page "/products"
+@rendermode InteractiveServer
+@using System.Text.Json
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<NavBar Current="Products" />
+<style>
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .product-details {
+        padding: 15px;
+        text-align: left;
+    }
+
+    .product-details h4 {
+        margin: 0 0 10px;
+        font-size: 1.25em;
+        color: #333;
+    }
+
+    .product-details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .action-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #fff;
+        background-color: #007bff;
+        transition: background-color 0.2s;
+    }
+
+    .action-button:hover {
+        background-color: #0056b3;
+    }
+
+    .favorites-button {
+        background-color: #ff4081;
+    }
+
+    .favorites-button:hover {
+        background-color: #c73060;
+    }
+
+</style>
+<div class="products-page">
+    <!-- HEADER SECTION -->
+    <section class="header">
+        <h1>@CurrentCategory</h1>
+        <div class="oval" style="background-image: url('/assets/images/living room.png')">
+            <div class="overlay"></div>
+        </div>
+    </section>
+
+    <section class="content">
+        <!-- SIDEBAR -->
+        <div class="sidebar outline-card">
+            <div class="categories">
+                <h6>Category</h6>
+                <div class="options">
+                    <button class="@GetCategoryClass("All")" @onclick='() => FilterByCategory("All")'>All</button>
+                    <button class="@GetCategoryClass("Featured")" @onclick='() => FilterByCategory("Featured")'>Featured</button>
+                    <button class="@GetCategoryClass("Living Room")" @onclick='() => FilterByCategory("Living Room")'>Living Room</button>
+                    <button class="@GetCategoryClass("Bedroom")" @onclick='() => FilterByCategory("Bedroom")'>Bedroom</button>
+                    <button class="@GetCategoryClass("Kitchen")" @onclick='() => FilterByCategory("Kitchen")'>Kitchen</button>
+                    <button class="@GetCategoryClass("Dining Room")" @onclick='() => FilterByCategory("Dining Room")'>Dining Room</button>
+                    <button class="@GetCategoryClass("Outdoor")" @onclick='() => FilterByCategory("Outdoor")'>Outdoor</button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <h6>Filter by:</h6>
+                <div class="type-filter">
+                    <h6>Type</h6>
+                    <div class="options">
+                        @foreach (var type in AvailableTypes)
+                        {
+                            <div>
+                                <input type="checkbox" id="@type" value="@type" @onchange="(e) => FilterByType(type, e.Value)" />
+                                <label for="@type">@type</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="price-filter">
+                    <h6>Price</h6>
+                    <div class="input">
+                        <input placeholder="Minimum" @bind="MinPrice" type="number" />
+                        <span></span>
+                        <input placeholder="Maximum" @bind="MaxPrice" type="number" />
+                    </div>
+                    <button @onclick="ApplyPriceFilter">Apply</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- SEARCH BAR -->
+            <div class="search-sort-bar">
+                <input type="text" placeholder="Search products..." @bind="SearchTerm" @oninput="(e) => OnSearchTermChanged(e.Value.ToString())" />
+                <div class="sort-options">
+                    <label for="sort">Sort By:</label>
+                    <select id="sort" @onchange="(e) => SortProducts(e.Value.ToString())">
+                        <option value="NameAsc">Name (A-Z)</option>
+                        <option value="NameDesc">Name (Z-A)</option>
+                        <option value="PriceAsc">Price (Low to High)</option>
+                        <option value="PriceDesc">Price (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- PRODUCTS LIST -->
+            <div class="products-grid">
+                @if (IsLoading)
+                {
+                    <p>Loading products...</p>
+                }
+                else if (FilteredProducts != null && FilteredProducts.Any())
+                {
+                    @foreach (var product in FilteredProducts)
+                    {
+                        <div class="product-card">
+                            <div class="product-image">
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl" alt="@product.Name" />
+                                }
+                                else
+                                {
+                                    <p><em>No image available</em></p>
+                                }
+                            </div>
+                            <div class="product-details">
+                                <h4>@product.Name</h4>
+                                <p><strong>Category:</strong> @product.Category</p>
+                                <p><strong>Type:</strong> @product.Type</p>
+                                <p><strong>Description:</strong> @product.ShortDescription</p>
+                                <p><strong>Price:</strong> ₱@product.Price.ToString("N0")</p>
+                                <p><strong>Stock:</strong> @product.StockQuantity</p>
+
+                                <!-- View Details Button -->
+                                <button class="action-button details-button"
+                                        @onclick="() => NavigateToProductInfo(product.Id)">
+                                    View Details
+                                </button>
+
+                                <!-- Add to Cart Button -->
+                                <button class="action-button"
+                                        @onclick="() => ToggleCart(product.Id)">
+                                    @(CartItems.Contains(product.Id) ? "Remove from Cart" : "Add to Cart")
+                                </button>
+
+                                <!-- Add to Favorites Button -->
+                                <button class="action-button favorites-button"
+                                        @onclick="() => ToggleFavorite(product.Id)">
+                                    @(FavoriteItems.Contains(product.Id) ? "Remove from Favorites" : "Add to Favorites")
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No products available.</p>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    public string SearchTerm { get; set; } = string.Empty;
+    public string SortOption { get; set; } = "NameAsc";
+    public List<int> CartItems { get; set; } = new List<int>();
+    public List<int> FavoriteItems { get; set; } = new List<int>();
+
+    public List<Product> ProductList { get; set; } = new List<Product>(); // Original product list
+    public List<Product> FilteredProducts { get; set; } = new List<Product>(); // Filtered product list
+    public bool IsLoading { get; set; } = true; // For loading indicator
+    public string CurrentCategory { get; set; } = "All";
+    public List<string> AvailableTypes { get; set; } = new List<string>(); // List of available types
+    public List<string> SelectedTypes { get; set; } = new List<string>(); // Selected types for filtering
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProductsAsync();
+    }
+
+    private async Task LoadProductsAsync()
+    {
+        try
+        {
+            var response = await HttpClient.GetAsync("https://prof-elec.vercel.app/products");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                ProductList = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+                AvailableTypes = ProductList.Select(p => p.Type).Distinct().ToList();
+                FilteredProducts = ProductList;
+            }
+            else
+            {
+                Console.WriteLine($"Error fetching products: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void SortFilteredProducts()
+    {
+        FilteredProducts = SortOption switch
+        {
+            "NameAsc" => FilteredProducts.OrderBy(p => p.Name).ToList(),
+            "NameDesc" => FilteredProducts.OrderByDescending(p => p.Name).ToList(),
+            "PriceAsc" => FilteredProducts.OrderBy(p => p.Price).ToList(),
+            "PriceDesc" => FilteredProducts.OrderByDescending(p => p.Price).ToList(),
+            _ => FilteredProducts
+        };
+    }
+
+    private void FilterByCategory(string category)
+    {
+        CurrentCategory = category;
+        ApplyFilters();
+    }
+
+    private void FilterByType(string type, object isChecked)
+    {
+        if ((bool)isChecked)
+        {
+            SelectedTypes.Add(type);
+        }
+        else
+        {
+            SelectedTypes.Remove(type);
+        }
+        ApplyFilters();
+    }
+
+    private void ApplyPriceFilter()
+    {
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        // Filter by category, type, price, and search term
+        FilteredProducts = ProductList
+            .Where(p => (CurrentCategory == "All" || p.Category == CurrentCategory))
+            .Where(p => !SelectedTypes.Any() || SelectedTypes.Contains(p.Type))
+            .Where(p => (!MinPrice.HasValue || p.Price >= MinPrice.Value) && (!MaxPrice.HasValue || p.Price <= MaxPrice.Value))
+            .Where(p => string.IsNullOrEmpty(SearchTerm) || p.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        // Apply sorting
+        SortFilteredProducts();
+    }
+
+
+    private string GetCategoryClass(string category) => CurrentCategory == category ? "active" : "";
+
+    private void NavigateToProductInfo(int productId)
+    {
+        NavigationManager.NavigateTo($"/product-info/{productId}");
+    }
+
+    private void SortProducts(string sortOption)
+    {
+        SortOption = sortOption;
+        SortFilteredProducts();
+    }
+
+    private void OnSearchTermChanged(string searchTerm)
+    {
+        SearchTerm = searchTerm;
+        ApplyFilters(); // Reapply filters whenever the search term changes
+    }
+
+    private void ToggleCart(int productId)
+    {
+        if (CartItems.Contains(productId))
+        {
+            CartItems.Remove(productId);
+        }
+        else
+        {
+            CartItems.Add(productId);
+        }
+    }
+
+    private void ToggleFavorite(int productId)
+    {
+        if (FavoriteItems.Contains(productId))
+        {
+            FavoriteItems.Remove(productId);
+        }
+        else
+        {
+            FavoriteItems.Add(productId);
+        }
+    }
+
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; }
+        public string ShortDescription { get; set; }
+        public string Dimensions { get; set; }
+        public decimal Price { get; set; }
+        public int StockQuantity { get; set; }
+        public bool IsVisible { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Brand { get; set; }
+        public string ImageUrl { get; set; }
+        public string LongDescription { get; set; }
+        public bool IsFeatured { get; set; }
+    }
+}

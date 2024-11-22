@@ -1,0 +1,36 @@
+﻿@page "/categories"
+@rendermode InteractiveServer
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
+
+<NavBar Current="Categories"/>
+
+<div class="categories-page">
+    <section class="header">
+        <h1>Categories</h1>
+
+        <p class="light">Shop by category and find the perfect furniture for every room in your home.</p>
+    </section>
+
+    <section class="container">
+        <div class="column bot">
+            <CategoryCard Category="Bathroom" />
+            <CategoryCard Category="Bedroom" />
+        </div>
+
+        <div class="column top">
+            <CategoryCard Category="Living Room" />
+            <CategoryCard Category="Outdoor" />
+        </div>
+
+        <div class="column bot">
+            <CategoryCard Category="Dining Room" />
+            <CategoryCard Category="Kitchen" />
+        </div>
+    </section>
+</div>
+
+@code {
+    
+
+}
