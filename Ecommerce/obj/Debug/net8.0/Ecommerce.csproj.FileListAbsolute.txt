@@ -56,3 +56,4 @@ E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\obj\Debug\net8.0\refin
 E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\obj\Debug\net8.0\Ecommerce.pdb
 E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\obj\Debug\net8.0\Ecommerce.genruntimeconfig.cache
 E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\obj\Debug\net8.0\ref\Ecommerce.dll
+E:\Commissions\Prof Elec 4 (E-commerce Project)\Ecommerce\obj\Debug\net8.0\Ecommerce.sourcelink.json

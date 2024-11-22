@@ -1,6 +1,9 @@
 ﻿@page "/products"
 @rendermode InteractiveServer
 @using System.Text.Json
+@using System.Text
+@using Ecommerce.Components.Shared
+@using Ecommerce.Components.Shared.Misc
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 
@@ -21,10 +24,10 @@
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .product-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-    }
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
 
     .product-image img {
         width: 100%;
@@ -37,17 +40,17 @@
         text-align: left;
     }
 
-    .product-details h4 {
-        margin: 0 0 10px;
-        font-size: 1.25em;
-        color: #333;
-    }
+        .product-details h4 {
+            margin: 0 0 10px;
+            font-size: 1.25em;
+            color: #333;
+        }
 
-    .product-details p {
-        margin: 5px 0;
-        font-size: 14px;
-        color: #666;
-    }
+        .product-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
 
     .action-button {
         display: block;
@@ -63,17 +66,17 @@
         transition: background-color 0.2s;
     }
 
-    .action-button:hover {
-        background-color: #0056b3;
-    }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
 
     .favorites-button {
         background-color: #ff4081;
     }
 
-    .favorites-button:hover {
-        background-color: #c73060;
-    }
+        .favorites-button:hover {
+            background-color: #c73060;
+        }
 
 </style>
 <div class="products-page">
@@ -181,13 +184,13 @@
 
                                 <!-- Add to Cart Button -->
                                 <button class="action-button"
-                                        @onclick="() => ToggleCart(product.Id)">
+                                        @onclick="() => (CartItems.Contains(product.Id) ? RemoveFromCart(product.Id) : AddToCart(product.Id))">
                                     @(CartItems.Contains(product.Id) ? "Remove from Cart" : "Add to Cart")
                                 </button>
 
-                                <!-- Add to Favorites Button -->
+                                <!-- Add to or Remove from Favorites Button -->
                                 <button class="action-button favorites-button"
-                                        @onclick="() => ToggleFavorite(product.Id)">
+                                        @onclick="async () => await ToggleFavorite(product.Id)">
                                     @(FavoriteItems.Contains(product.Id) ? "Remove from Favorites" : "Add to Favorites")
                                 </button>
                             </div>
@@ -219,8 +222,41 @@
     public decimal? MaxPrice { get; set; }
 
     protected override async Task OnInitializedAsync()
+{
+    await Task.WhenAll(LoadProductsAsync(), LoadFavoritesAsync(), LoadCartItemsAsync());
+}
+
+
+    private async Task LoadFavoritesAsync()
     {
-        await LoadProductsAsync();
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/favorites/{userId}"; // Full endpoint
+
+        try
+        {
+            var response = await HttpClient.GetAsync(endpoint);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var favoriteProducts = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                // Populate FavoriteItems with product IDs
+                FavoriteItems = favoriteProducts?.Select(p => p.Id).ToList() ?? new List<int>();
+            }
+            else
+            {
+                Console.WriteLine($"Failed to fetch favorites. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading favorites: {ex.Message}");
+        }
     }
 
     private async Task LoadProductsAsync()
@@ -232,9 +268,9 @@
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
                 ProductList = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
                 AvailableTypes = ProductList.Select(p => p.Type).Distinct().ToList();
                 FilteredProducts = ProductList;
             }
@@ -335,18 +371,159 @@
         }
     }
 
-    private void ToggleFavorite(int productId)
+    private async Task ToggleFavorite(int productId)
     {
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/favorites/{userId}"; // Full endpoint
+
         if (FavoriteItems.Contains(productId))
         {
+            // Remove from favorites logic (if DELETE endpoint exists)
             FavoriteItems.Remove(productId);
+            Console.WriteLine($"Product {productId} removed from favorites.");
         }
         else
         {
-            FavoriteItems.Add(productId);
+            try
+            {
+                var favoriteData = new { product_id = productId };
+                var jsonContent = new StringContent(JsonSerializer.Serialize(favoriteData), Encoding.UTF8, "application/json");
+
+                // Make the POST request to add to favorites
+                var response = await HttpClient.PostAsync(endpoint, jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    FavoriteItems.Add(productId);
+                    Console.WriteLine($"Product {productId} added to favorites successfully!");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to add to favorites. Status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding to favorites: {ex.Message}");
+            }
         }
     }
 
+    private async Task RemoveFromFavorites(int productId)
+    {
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/favorites/{userId}/{productId}"; // Full DELETE endpoint
+
+        try
+        {
+            var response = await HttpClient.DeleteAsync(endpoint);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Remove product ID from the favorites list
+                FavoriteItems.Remove(productId);
+                Console.WriteLine($"Product {productId} removed from favorites successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to remove from favorites. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing from favorites: {ex.Message}");
+        }
+    }
+
+    private async Task AddToCart(int productId)
+    {
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/cart/{userId}"; // Full POST endpoint
+
+        try
+        {
+            var cartData = new { product_id = productId };
+            var jsonContent = new StringContent(JsonSerializer.Serialize(cartData), Encoding.UTF8, "application/json");
+
+            // Make the POST request to add to cart
+            var response = await HttpClient.PostAsync(endpoint, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                CartItems.Add(productId); // Add product ID to local cart list
+                Console.WriteLine($"Product {productId} added to cart successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to add to cart. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding to cart: {ex.Message}");
+        }
+    }
+
+    private async Task RemoveFromCart(int productId)
+    {
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/cart/{userId}/{productId}"; // Full DELETE endpoint
+
+        try
+        {
+            var response = await HttpClient.DeleteAsync(endpoint);
+
+            if (response.IsSuccessStatusCode)
+            {
+                CartItems.Remove(productId); // Remove product ID from local cart list
+                Console.WriteLine($"Product {productId} removed from cart successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to remove from cart. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing from cart: {ex.Message}");
+        }
+    }
+
+    private async Task LoadCartItemsAsync()
+    {
+        string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID logic
+        string baseUrl = "https://prof-elec.vercel.app"; // Base URL
+        string endpoint = $"{baseUrl}/cart/{userId}"; // Full GET endpoint
+
+        try
+        {
+            var response = await HttpClient.GetAsync(endpoint);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var cartProducts = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                // Populate CartItems with product IDs
+                CartItems = cartProducts?.Select(p => p.Id).ToList() ?? new List<int>();
+            }
+            else
+            {
+                Console.WriteLine($"Failed to fetch cart items. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading cart items: {ex.Message}");
+        }
+    }
 
     public class Product
     {

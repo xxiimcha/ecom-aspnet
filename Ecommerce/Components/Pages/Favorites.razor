@@ -1,9 +1,56 @@
 ﻿@page "/favorites"
 @rendermode InteractiveServer
+@using System.Text.Json
+@inject HttpClient HttpClient
 @using Ecommerce.Components.Shared
 @using Ecommerce.Components.Shared.Misc
 
-<NavBar Current="Favorites"/>
+<NavBar Current="Favorites" />
+
+<style>
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .product-details {
+        padding: 15px;
+        text-align: left;
+    }
+
+    .product-details h4 {
+        margin: 0 0 10px;
+        font-size: 1.25em;
+        color: #333;
+    }
+
+    .product-details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
 
 <div class="favorites-page">
     <section class="favorites-section">
@@ -11,8 +58,12 @@
             <h1>Favorites</h1>
 
             <!-- Clear Favorites button -->
-            <button class="outline">
-                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M17.17,34.12v42C17.17,88,25.51,97,36.57,97H63.43c11.06,0,19.4-9,19.4-20.89v-42a8.95,8.95,0,0,0-1.5-17.77h-12A14.85,14.85,0,0,0,54.56,3H45.44A14.85,14.85,0,0,0,30.68,16.35h-12a8.95,8.95,0,0,0-1.5,17.77ZM63.43,91H36.57c-7.78,0-13.43-6.27-13.43-14.92V34.25H76.86V76.11C76.86,84.76,71.21,91,63.43,91ZM45.44,9h9.12a8.87,8.87,0,0,1,8.73,7.38H36.71A8.87,8.87,0,0,1,45.44,9ZM18.67,22.31H81.33a3,3,0,1,1,0,6H18.67a3,3,0,1,1,0-6Z" /><path d="M60.44,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,60.44,43.29Z" /><path d="M39.56,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,39.56,43.29Z" /></svg>
+            <button class="outline" @onclick="ClearFavorites">
+                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M17.17,34.12v42C17.17,88,25.51,97,36.57,97H63.43c11.06,0,19.4-9,19.4-20.89v-42a8.95,8.95,0,0,0-1.5-17.77h-12A14.85,14.85,0,0,0,54.56,3H45.44A14.85,14.85,0,0,0,30.68,16.35h-12a8.95,8.95,0,0,0-1.5,17.77ZM63.43,91H36.57c-7.78,0-13.43-6.27-13.43-14.92V34.25H76.86V76.11C76.86,84.76,71.21,91,63.43,91ZM45.44,9h9.12a8.87,8.87,0,0,1,8.73,7.38H36.71A8.87,8.87,0,0,1,45.44,9ZM18.67,22.31H81.33a3,3,0,1,1,0,6H18.67a3,3,0,1,1,0-6Z" />
+                    <path d="M60.44,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,60.44,43.29Z" />
+                    <path d="M39.56,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,39.56,43.29Z" />
+                </svg>
 
                 <p>Clear Favorites</p>
             </button>
@@ -20,16 +71,104 @@
 
         <!-- Products list-->
         <div class="products-grid c-4">
-            @for (int i = 0; i < 10; i++) {
-                <FavoritesCard />
+            @if (IsLoading)
+            {
+                <p>Loading favorites...</p>
+            }
+            else if (FavoriteProducts.Any())
+            {
+                @foreach (var product in FavoriteProducts)
+                {
+                    <div class="product-card">
+                        <div class="product-image">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@product.ImageUrl" alt="@product.Name" />
+                            }
+                            else
+                            {
+                                <p><em>No image available</em></p>
+                            }
+                        </div>
+                        <div class="product-details">
+                            <h4>@product.Name</h4>
+                            <p><strong>Category:</strong> @product.Category</p>
+                            <p><strong>Description:</strong> @product.ShortDescription</p>
+                            <p><strong>Price:</strong> ₱@product.Price.ToString("N0")</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No favorite products found.</p>
             }
         </div>
     </section>
-
 </div>
 
 @code {
-    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+    public string UserId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc";
+    public bool IsLoading { get; set; } = true;
+    public List<Product> FavoriteProducts { get; set; } = new List<Product>();
 
-    // Place your code here
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFavoritesAsync();
+    }
+
+    private async Task LoadFavoritesAsync()
+    {
+        IsLoading = true;
+
+        try
+        {
+            string url = $"https://prof-elec.vercel.app/favorites/{UserId}";
+            var response = await HttpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                FavoriteProducts = JsonSerializer.Deserialize<List<Product>>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            }
+            else
+            {
+                Console.WriteLine($"Failed to fetch favorites. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading favorites: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void ClearFavorites()
+    {
+        FavoriteProducts.Clear();
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; }
+        public string ShortDescription { get; set; }
+        public string Dimensions { get; set; }
+        public decimal Price { get; set; }
+        public int StockQuantity { get; set; }
+        public bool IsVisible { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Brand { get; set; }
+        public string ImageUrl { get; set; }
+        public string LongDescription { get; set; }
+        public bool IsFeatured { get; set; }
+    }
 }

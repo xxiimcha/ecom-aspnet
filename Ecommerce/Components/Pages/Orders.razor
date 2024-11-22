@@ -1,43 +1,269 @@
 ﻿@page "/orders"
+@using System.Text.Json
+@inject HttpClient HttpClient
 @using Ecommerce.Components.Shared
 @using Ecommerce.Components.Shared.Misc
 @inject NavigationManager Navigation
-@rendermode InteractiveServer
 
 <NavBar Current="Orders" />
 
+<style>
+    .orders-page {
+        padding: 20px;
+    }
+
+    .orders-section {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    .status-filter {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        gap: 15px;
+    }
+
+        .status-filter button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            background-color: #f0f0f0;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .status-filter button.active {
+                background-color: #007bff;
+                color: #fff;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .status-filter button:hover {
+                background-color: #0056b3;
+                color: #fff;
+            }
+
+    .orders {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .order-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .order-header h4 {
+            font-size: 1.2em;
+            color: #333;
+            margin: 0;
+        }
+
+        .order-header p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+    .order-details {
+        font-size: 0.9em;
+        color: #444;
+        margin-bottom: 15px;
+    }
+
+    .order-products {
+        margin-top: 15px;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+    }
+
+    .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-item p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .product-item .price {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+    .no-orders {
+        text-align: center;
+        font-size: 1.2em;
+        color: #777;
+        margin-top: 20px;
+    }
+</style>
+
 <div class="orders-page">
     <section class="orders-section">
-        <div class="header">
-            <h1 class="page-title">Orders</h1>
+        <h1 class="page-title">Orders</h1>
 
-            <div class="group">
-                <h6>Status</h6>
-
-                <!-- Status Filters 
-                Add an 'active' class to the filter button if the filter is selected.
-                E.g. <button class="active">Active</button>
-                -->
-                <div class="radio-group">
-                    <button class="active">All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
-                </div>
-            </div>
+        <!-- Status Filters -->
+        <div class="status-filter">
+            <button class="@GetStatusClass("all")" @onclick='() => ApplyFilter("all")'>All</button>
+            <button class="@GetStatusClass("active")" @onclick='() => ApplyFilter("active")'>Active</button>
+            <button class="@GetStatusClass("completed")" @onclick='() => ApplyFilter("completed")'>Completed</button>
         </div>
 
         <!-- Orders List -->
         <div class="orders">
-            <!-- Sample Orders -->
-            @for (int i  = 0; i < 3; i++) {
-                <OrdersCard/>
+            @if (IsLoading)
+            {
+                <p>Loading orders...</p>
+            }
+            else if (FilteredOrders != null && FilteredOrders.Any())
+            {
+                @foreach (var order in FilteredOrders)
+                {
+                    <div class="order-card">
+                        <div class="order-header">
+                            <h4>Order #@order.ReferenceNumber</h4>
+                            <p>Status: @order.Status</p>
+                        </div>
+                        <div class="order-details">
+                            <p><strong>Date:</strong> @order.Date.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        </div>
+
+                        <!-- Products in the order -->
+                        <div class="order-products">
+                            <h5>Products:</h5>
+                            @foreach (var product in order.Products)
+                            {
+                                <div class="product-item">
+                                    <p>@product.Name (x@product.Quantity)</p>
+                                    <p class="price">₱@product.Price.ToString("N0")</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="no-orders">No orders found for the selected status.</p>
             }
         </div>
     </section>
 </div>
 
 @code {
-    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+    public string UserId { get; set; } = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc";
+    public List<OrderModel> AllOrders { get; set; } = new List<OrderModel>();
+    public List<OrderModel> FilteredOrders { get; set; } = new List<OrderModel>();
+    public bool IsLoading { get; set; } = true;
+    public string CurrentFilter { get; set; } = "all";
 
-    // Place your code here
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchOrdersAsync();
+    }
+
+    private async Task FetchOrdersAsync()
+    {
+        IsLoading = true;
+        try
+        {
+            string url = $"https://prof-elec.vercel.app/orders/{UserId}";
+            var response = await HttpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                AllOrders = JsonSerializer.Deserialize<List<OrderModel>>(responseBody, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                FilteredOrders = AllOrders; // Initially, show all orders
+            }
+            else
+            {
+                Console.WriteLine($"Failed to fetch orders. Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching orders: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void ApplyFilter(string filter)
+    {
+        CurrentFilter = filter;
+
+        if (filter == "all")
+        {
+            FilteredOrders = AllOrders;
+        }
+        else
+        {
+            FilteredOrders = AllOrders.Where(o => o.Status.Equals(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+    }
+
+    private string GetStatusClass(string status) => CurrentFilter == status ? "active" : "";
+
+    public class OrderModel
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string Status { get; set; }
+        public string ReferenceNumber { get; set; }
+        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
+    }
+
+    public class ProductModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Brand { get; set; }
+        public string Category { get; set; }
+        public string Type { get; set; }
+        public string ImageUrl { get; set; }
+        public int Quantity { get; set; }
+    }
 }
