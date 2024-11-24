@@ -1,58 +1,122 @@
-﻿<!--
-If the product is added to cart, add an 'in-cart' class to the product card.
-If the product is added to favorites, add an 'in-favorites' class to the product card.
+﻿@using System.Text.Json
+@using System.Net.Http.Json
+@inject HttpClient Http
 
-E.g. <div class="main-product-card in-cart in-favorites"> (Added to both Cart and Favorites)
--->
-<div class="main-product-card">
-    <!-- Product Image 
-    Change the url in background-image to change the image
-    -->
-    <div class="image" style="background-image: url(https://static.wikia.nocookie.net/fine-dining-extended-universe/images/8/8c/Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.jpg)"></div>
+<div class="product-container">
+    @foreach (var product in products)
+    {
+        <div class="main-product-card @(product.InCart ? "in-cart" : "") @(product.InFavorites ? "in-favorites" : "")">
+            <div class="image" style="background-image: url(@(product.ImageUrl ?? PlaceholderImage))"></div>
 
-    <!-- Product details -->
-    <div class="details">
-        <h6 class="name">Product Name</h6>
-        <p class="desc light">Product Description</p>
+            <div class="details">
+                <h6 class="name">@product.Name</h6>
+                <p class="desc light">@product.ShortDescription</p>
 
-        <div class="row">
-            <p class="price">₱899</p>
+                <div class="row">
+                    <p class="price">₱@product.Price.ToString("N0")</p>
 
-            <!-- Add to Cart button -->
-            <button class="add-cart"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M24.33,49a3.13,3.13,0,0,1-1.11-.21,3.25,3.25,0,0,1-1.89-4.15L34.17,10.37a3.23,3.23,0,1,1,6,2.27L27.37,46.87a3.23,3.23,0,0,1-3,2.1Z" /><path d="M88.51,34H36.44L34,40.4H88.52a1.06,1.06,0,0,1,1.07,1.08v4.06L83.17,77.59a9.67,9.67,0,0,1-9.45,7.75H26.3a9.68,9.68,0,0,1-9.46-7.75L10.42,45.32V41.47a1.06,1.06,0,0,1,1.07-1.07h15a4.13,4.13,0,0,0,.77-.13L29.59,34H11.49A7.52,7.52,0,0,0,4,41.48v3.85a7.9,7.9,0,0,0,.13,1.45l6.42,32.05A16.07,16.07,0,0,0,26.29,91.71H73.71A16.1,16.1,0,0,0,89.45,78.83l6.42-32A7.9,7.9,0,0,0,96,45.33V41.48A7.52,7.52,0,0,0,88.51,34Z" /><path d="M71.4,40.4a3.2,3.2,0,0,1-3-2.18L59.8,12.55a3.21,3.21,0,1,1,6.08-2.06l8.55,25.68a3.21,3.21,0,0,1-2,4.06,2.8,2.8,0,0,1-1,.17Z" /><path d="M56.42,57.52H43.58a3.21,3.21,0,0,1,0-6.42H56.42a3.21,3.21,0,0,1,0,6.42Z" /></svg></button>
-        
-            <!-- Remove from Cart button -->
-            <button class="remove-cart"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><g id="Layer_2" data-name="Layer 2"><path d="M235.83,82.55,111.38,207a29.54,29.54,0,0,1-41.51,0L14.58,151.66a29.32,29.32,0,0,1,41.47-41.47l34.56,34.59L194.35,41.05a29.52,29.52,0,0,1,41.48,0A29.56,29.56,0,0,1,235.83,82.55Z" /></g></svg></button>
+                    <button class="add-cart" @onclick="() => AddToCart(product)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                            <path d="M24.33,49a3.13,3.13,0,0,1-1.11-.21,3.25,3.25,0,0,1-1.89-4.15L34.17,10.37a3.23,3.23,0,1,1,6,2.27L27.37,46.87a3.23,3.23,0,0,1-3,2.1Z" />
+                        </svg>
+                    </button>
+
+                    <button class="remove-cart" @onclick="() => RemoveFromCart(product)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">
+                            <path d="M235.83,82.55,111.38,207a29.54,29.54,0,0,1-41.51,0L14.58,151.66a29.32,29.32,0,0,1,41.47-41.47l34.56,34.59L194.35,41.05a29.52,29.52,0,0,1,41.48,0A29.56,29.56,0,0,1,235.83,82.55Z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button class="floating-button add-favorites" @onclick="() => AddToFavorites(product)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50,16.71l-1.19-1.18a26.78,26.78,0,1,0-37.95,37.8L50,92.3l39.14-39a26.78,26.78,0,0,0-37.95-37.8ZM50,82,16,48.14a19.33,19.33,0,0,1,0-27.43,19.6,19.6,0,0,1,27.64,0L50,27l6.34-6.32a19.6,19.6,0,0,1,27.64,0,19.33,19.33,0,0,1,0,27.43Z" />
+                </svg>
+            </button>
+
+            <button class="floating-button remove-favorites" @onclick="() => RemoveFromFavorites(product)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M89.14,53.33,50,92.3l-39.14-39a26.78,26.78,0,1,1,38-37.8L50,16.71l1.19-1.18a26.78,26.78,0,0,1,38,37.8Z" />
+                </svg>
+            </button>
         </div>
-    </div>
-
-    <!-- Add to Favorites button -->
-    <button class="floating-button add-favorites">
-        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <defs>
-                <style>
-                    .cls-1 {
-                        fill-rule: evenodd;
-                    }</style>
-            </defs>
-            <path class="cls-1" d="M50,16.71l-1.19-1.18a26.78,26.78,0,1,0-37.95,37.8L50,92.3l39.14-39a26.78,26.78,0,0,0-37.95-37.8ZM50,82,16,48.14a19.33,19.33,0,0,1,0-27.43,19.6,19.6,0,0,1,27.64,0L50,27l6.34-6.32a19.6,19.6,0,0,1,27.64,0,19.33,19.33,0,0,1,0,27.43Z" />
-        </svg>
-    </button>
-
-    <!-- Remove from Favorites button -->
-    <button class="floating-button remove-favorites">
-        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <defs>
-                <style>
-                    .heart-cls-1 {
-                        fill-rule: evenodd;
-                    }</style>
-            </defs>
-            <path class="heart-cls-1" d="M89.14,53.33,50,92.3l-39.14-39a26.78,26.78,0,1,1,38-37.8L50,16.71l1.19-1.18a26.78,26.78,0,0,1,38,37.8Z" />
-        </svg>
-    </button>
+    }
 </div>
 
 @code {
-    // Place your code here
+    private List<Product> products = new List<Product>();
+    private const string PlaceholderImage = "https://via.placeholder.com/150?text=No+Image";
+    private string userId = "eead7a35-9261-4e4c-b0ae-5f1cb659c2cc"; // Replace with dynamic user ID as needed
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch all products
+        products = await Http.GetFromJsonAsync<List<Product>>("https://prof-elec.vercel.app/products");
+
+        // Fetch items in cart and favorites
+        var cartItems = await Http.GetFromJsonAsync<List<Product>>($"https://prof-elec.vercel.app/cart/{userId}");
+        var favoriteItems = await Http.GetFromJsonAsync<List<Product>>($"https://prof-elec.vercel.app/favorites/{userId}");
+
+        // Mark products as in cart or in favorites
+        foreach (var product in products)
+        {
+            if (cartItems.Any(c => c.Id == product.Id))
+            {
+                product.InCart = true;
+            }
+
+            if (favoriteItems.Any(f => f.Id == product.Id))
+            {
+                product.InFavorites = true;
+            }
+        }
+    }
+
+    private async Task AddToCart(Product product)
+    {
+        var response = await Http.PostAsJsonAsync($"https://prof-elec.vercel.app/cart/{userId}", new { product_id = product.Id });
+        if (response.IsSuccessStatusCode)
+        {
+            product.InCart = true;
+        }
+    }
+
+    private async Task RemoveFromCart(Product product)
+    {
+        var response = await Http.DeleteAsync($"https://prof-elec.vercel.app/cart/{userId}/{product.Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            product.InCart = false;
+        }
+    }
+
+    private async Task AddToFavorites(Product product)
+    {
+        var response = await Http.PostAsJsonAsync($"https://prof-elec.vercel.app/favorites/{userId}", new { product_id = product.Id });
+        if (response.IsSuccessStatusCode)
+        {
+            product.InFavorites = true;
+        }
+    }
+
+    private async Task RemoveFromFavorites(Product product)
+    {
+        var response = await Http.DeleteAsync($"https://prof-elec.vercel.app/favorites/{userId}/{product.Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            product.InFavorites = false;
+        }
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ShortDescription { get; set; }
+        public decimal Price { get; set; }
+        public string ImageUrl { get; set; }
+        public bool InCart { get; set; }
+        public bool InFavorites { get; set; }
+    }
 }
