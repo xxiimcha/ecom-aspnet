@@ -2,18 +2,15 @@
 @rendermode InteractiveServer
 @using Ecommerce.Components.Shared
 @using Ecommerce.Components.Shared.Misc
+@inject HttpClient Http
 
 <NavBar Current="Products" />
 
 <div class="products-page">
     <!-- HEADER SECTION -->
     <section class="header">
-        <!--
-        Change Category Name and background-image URL.
-        Images are located in /wwwroot/assets/images. But when getting an image, you don't have to include /wwwroot.
-        -->
-        <h1>Category Name</h1>
-        <div class="oval" style="background-image: url('/assets/images/living room.png')">
+        <h1>@selectedCategory</h1>
+        <div class="oval" style="background-image: url('/assets/images/@GetCategoryImage()')">
             <div class="overlay"></div>
         </div>
     </section>
@@ -24,20 +21,11 @@
             <div class="categories">
                 <!-- Categories -->
                 <h6>Category</h6>
-
-                <!--
-                Add an 'active' class to the button if the categry is selected
-                E.g. <button class="active">Living Room</button>
-                -->
                 <div class="options">
-                    <button>All</button>
-                    <button>Featured</button>
-                    <button>Living Room</button>
-                    <button>Bedroom</button>
-                    <button>Kitchen</button>
-                    <button>Dining Room</button>
-                    <button>Outdoor</button>
-
+                    @foreach (var category in categories)
+                    {
+                        <button class="@(selectedCategory == category ? "active" : "")" @onclick="@(() => ChangeCategory(category))">@category</button>
+                    }
                 </div>
             </div>
 
@@ -50,12 +38,14 @@
                 <!-- Type Filter -->
                 <div class="type-filter">
                     <h6>Type</h6>
-
                     <div class="options">
-                        <!-- Sample Type Checkboxes -->
-                        @for (int i = 0; i < 3; i++)
+                        @foreach (var type in availableTypes)
                         {
-                            <FilterTypeCheckbox />
+                            <!-- Ensure FilterTypeCheckbox matches your component structure -->
+                            <label>
+                                <input type="checkbox" @onchange="() => FilterByType(type)" />
+                                @type
+                            </label>
                         }
                     </div>
                 </div>
@@ -63,24 +53,18 @@
                 <!-- Price Filter -->
                 <div class="price-filter">
                     <h6>Price</h6>
-
                     <div class="input">
-                        <input placeholder="Minimum" />
+                        <input type="number" placeholder="Minimum" @bind="minPrice" />
                         <span></span>
-                        <input placeholder="Maximum" />
+                        <input type="number" placeholder="Maximum" @bind="maxPrice" />
                     </div>
                 </div>
             </div>
 
             <!-- Filter Buttons -->
             <div class="actions">
-                <!-- Apply Filter button -->
-                <button class="primary black">Apply</button>
-
-                <!-- Clear Filters button -->
-                <button class="outline">
-                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M17.17,34.12v42C17.17,88,25.51,97,36.57,97H63.43c11.06,0,19.4-9,19.4-20.89v-42a8.95,8.95,0,0,0-1.5-17.77h-12A14.85,14.85,0,0,0,54.56,3H45.44A14.85,14.85,0,0,0,30.68,16.35h-12a8.95,8.95,0,0,0-1.5,17.77ZM63.43,91H36.57c-7.78,0-13.43-6.27-13.43-14.92V34.25H76.86V76.11C76.86,84.76,71.21,91,63.43,91ZM45.44,9h9.12a8.87,8.87,0,0,1,8.73,7.38H36.71A8.87,8.87,0,0,1,45.44,9ZM18.67,22.31H81.33a3,3,0,1,1,0,6H18.67a3,3,0,1,1,0-6Z" /><path d="M60.44,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,60.44,43.29Z" /><path d="M39.56,43.29a3,3,0,0,0-3,3V76.11a3,3,0,1,0,6,0V46.27A3,3,0,0,0,39.56,43.29Z" /></svg>
-                </button>
+                <button class="primary black" @onclick="ApplyFilters">Apply</button>
+                <button class="outline" @onclick="ClearFilters">Clear Filters</button>
             </div>
         </div>
 
@@ -88,44 +72,15 @@
             <div class="header-options">
                 <!-- Search Bar -->
                 <div class="searchbar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">
-                        <defs>
-                            <style>
-                                .cls-1 {
-                                    fill-rule: evenodd;
-                                }</style>
-                        </defs>
-                        <g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M176.86,101.7A75.16,75.16,0,1,1,101.7,26.54,75.15,75.15,0,0,1,176.86,101.7Zm-13.47,73.82A96,96,0,1,1,178,160.34l63.6,66.36a10.52,10.52,0,1,1-15.2,14.56Z" /></g>
-                    </svg>
-
-                    <!-- Input for the search bar -->
-                    <input placeholder="Search products" />
-                </div>
-
-                <!-- Sort Products Buttons -->
-                <div class="group">
-                    <h6>Sort by</h6>
-
-                    <!-- Add an 'active' class to the button if selected -->
-                    <div class="radio-group">
-                        <button>Name</button>
-                        <button>Price</button>
-                    </div>
-
-                    <!-- Add an 'active' class to the button if selected -->
-                    <div class="radio-group">
-                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="45.45" y="6.04" width="9.11" height="91.07" rx="4.55" /><rect x="66.38" y="-5.78" width="9.11" height="68.31" rx="4.55" transform="translate(0.71 58.46) rotate(-45)" /><rect x="-5.08" y="23.82" width="68.31" height="9.11" rx="4.55" transform="translate(-11.55 28.87) rotate(-45)" /></svg></button>
-                        <button><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="45.45" y="2.89" width="9.11" height="91.07" rx="4.55" /><rect x="24.52" y="37.48" width="9.11" height="68.31" rx="4.55" transform="translate(-42.14 41.54) rotate(-45)" /><rect x="36.78" y="67.08" width="68.31" height="9.11" rx="4.55" transform="translate(-29.88 71.13) rotate(-45)" /></svg></button>
-                    </div>
+                    <input placeholder="Search products" @bind="searchQuery" @oninput="SearchProducts" />
                 </div>
             </div>
 
             <!-- Products List -->
             <div class="products products-grid c-3">
-                <!-- Sample products -->
-                @for (int i = 0; i < 10; i++)
+                @foreach (var product in products)
                 {
-                    <ProductsCard />
+                    <ProductsCard Product="product" />
                 }
             </div>
         </div>
@@ -133,7 +88,113 @@
 </div>
 
 @code {
-    public string userID = "test_user_1"; // Other IDs: "test_user_2", "test_user_3"
+    private List<Product> allProducts = new();
+    private List<Product> products = new();
+    private List<string> categories = new() { "All", "Featured", "Living Room", "Bedroom", "Kitchen", "Dining Room", "Outdoor" };
+    private List<string> availableTypes = new();
+    private List<string> selectedTypes = new();
+    private string selectedCategory = "All";
+    private string searchQuery = "";
+    private decimal? minPrice;
+    private decimal? maxPrice;
 
-    // Place your code here
+    private Dictionary<string, string> categoryImages = new()
+    {
+        { "All", "default.png" },
+        { "Featured", "featured.png" },
+        { "Living Room", "living_room.png" },
+        { "Bedroom", "bedroom.png" },
+        { "Kitchen", "kitchen.png" },
+        { "Dining Room", "dining_room.png" },
+        { "Outdoor", "outdoor.png" },
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch products from API
+        allProducts = await Http.GetFromJsonAsync<List<Product>>("https://prof-elec.vercel.app/products");
+        products = new List<Product>(allProducts);
+        UpdateTypeFilters(selectedCategory); // Initialize types for the default category
+    }
+
+    private void ChangeCategory(string category)
+    {
+        selectedCategory = category;
+
+        // Filter products by selected category
+        products = category == "All"
+            ? allProducts
+            : allProducts.Where(p => p.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        UpdateTypeFilters(category);
+    }
+
+    private void UpdateTypeFilters(string category)
+    {
+        // Dynamically update type filters based on the category
+        availableTypes = category == "All"
+            ? allProducts.Select(p => p.Type).Distinct().ToList()
+            : allProducts.Where(p => p.Category.Equals(category, StringComparison.OrdinalIgnoreCase))
+                         .Select(p => p.Type)
+                         .Distinct()
+                         .ToList();
+    }
+
+    private string GetCategoryImage()
+    {
+        // Dynamically fetch category image or use default
+        return categoryImages.TryGetValue(selectedCategory, out var img)
+            ? $"/assets/images/{img}"
+            : "/assets/images/default.png";
+    }
+
+    private void SearchProducts()
+    {
+        ApplyFilters(); // Ensure search works with current filters
+    }
+
+    private void ApplyFilters()
+    {
+        // Filter products based on search query, category, types, and price
+        products = allProducts
+            .Where(p => (string.IsNullOrWhiteSpace(searchQuery) || p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) &&
+                        (selectedCategory == "All" || p.Category.Equals(selectedCategory, StringComparison.OrdinalIgnoreCase)) &&
+                        (!selectedTypes.Any() || selectedTypes.Contains(p.Type)) &&
+                        (!minPrice.HasValue || p.Price >= minPrice.Value) &&
+                        (!maxPrice.HasValue || p.Price <= maxPrice.Value))
+            .ToList();
+    }
+
+    private void ClearFilters()
+    {
+        // Reset all filters
+        selectedCategory = "All";
+        searchQuery = string.Empty;
+        selectedTypes.Clear();
+        minPrice = null;
+        maxPrice = null;
+        products = new List<Product>(allProducts);
+        UpdateTypeFilters(selectedCategory);
+    }
+
+    private void FilterByType(string type)
+    {
+        // Add or remove type from selected filters
+        if (selectedTypes.Contains(type))
+            selectedTypes.Remove(type);
+        else
+            selectedTypes.Add(type);
+
+        ApplyFilters();
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Type { get; set; }
+        public string Category { get; set; }
+        public string ImageUrl { get; set; }
+    }
 }
