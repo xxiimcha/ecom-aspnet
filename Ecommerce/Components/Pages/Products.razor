@@ -19,7 +19,6 @@
         <!-- SIDEBAR -->
         <div class="sidebar outline-card">
             <div class="categories">
-                <!-- Categories -->
                 <h6>Category</h6>
                 <div class="options">
                     @foreach (var category in categories)
@@ -29,19 +28,13 @@
                 </div>
             </div>
 
-            <span></span>
-
-            <!-- Filters -->
             <div class="filters">
                 <h6>Filter by:</h6>
-
-                <!-- Type Filter -->
                 <div class="type-filter">
                     <h6>Type</h6>
                     <div class="options">
                         @foreach (var type in availableTypes)
                         {
-                            <!-- Ensure FilterTypeCheckbox matches your component structure -->
                             <label>
                                 <input type="checkbox" @onchange="() => FilterByType(type)" />
                                 @type
@@ -50,7 +43,6 @@
                     </div>
                 </div>
 
-                <!-- Price Filter -->
                 <div class="price-filter">
                     <h6>Price</h6>
                     <div class="input">
@@ -61,7 +53,6 @@
                 </div>
             </div>
 
-            <!-- Filter Buttons -->
             <div class="actions">
                 <button class="primary black" @onclick="ApplyFilters">Apply</button>
                 <button class="outline" @onclick="ClearFilters">Clear Filters</button>
@@ -70,18 +61,43 @@
 
         <div class="main">
             <div class="header-options">
-                <!-- Search Bar -->
                 <div class="searchbar">
                     <input placeholder="Search products" @bind="searchQuery" @oninput="SearchProducts" />
                 </div>
+                <div class="group">
+                    <h6>Sort by</h6>
+
+                    <!-- Sorting Buttons for Criteria -->
+                    <div class="radio-group">
+                        <button class="@(sortCriteria == "Name" ? "active" : "")" @onclick="() => SetSortCriteria('Name')">Name</button>
+                        <button class="@(sortCriteria == "Price" ? "active" : "")" @onclick="() => SetSortCriteria('Price')">Price</button>
+                    </div>
+
+                    <!-- Sorting Buttons for Direction -->
+                    <div class="radio-group">
+                        <button class="@(isAscending ? "active" : "")" @onclick="() => ToggleSortDirection(true)">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                <rect x="45.45" y="6.04" width="9.11" height="91.07" rx="4.55" />
+                                <rect x="66.38" y="-5.78" width="9.11" height="68.31" rx="4.55" transform="translate(0.71 58.46) rotate(-45)" />
+                                <rect x="-5.08" y="23.82" width="68.31" height="9.11" rx="4.55" transform="translate(-11.55 28.87) rotate(-45)" />
+                            </svg>
+                        </button>
+                        <button class="@(isAscending ? "" : "active")" @onclick="() => ToggleSortDirection(false)">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                <rect x="45.45" y="2.89" width="9.11" height="91.07" rx="4.55" />
+                                <rect x="24.52" y="37.48" width="9.11" height="68.31" rx="4.55" transform="translate(-42.14 41.54) rotate(-45)" />
+                                <rect x="36.78" y="67.08" width="68.31" height="9.11" rx="4.55" transform="translate(-29.88 71.13) rotate(-45)" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Products List -->
             <div class="products products-grid c-3">
-                @foreach (var product in products)
-                {
-                    <ProductsCard Product="product" />
-                }
+                <!-- ProductsCard dynamically uses the filtered products list -->
+                <ProductsCard />
             </div>
         </div>
     </section>
@@ -98,6 +114,37 @@
     private decimal? minPrice;
     private decimal? maxPrice;
 
+    private string sortCriteria = "Name"; // Default sort criteria
+    private bool isAscending = true;     // Default sorting direction
+
+    private void SetSortCriteria(string criteria)
+    {
+        sortCriteria = criteria;
+        ApplySorting();
+    }
+
+    private void ToggleSortDirection(bool ascending)
+    {
+        isAscending = ascending;
+        ApplySorting();
+    }
+
+    private void ApplySorting()
+    {
+        if (sortCriteria == "Name")
+        {
+            products = isAscending
+                ? products.OrderBy(p => p.Name).ToList()
+                : products.OrderByDescending(p => p.Name).ToList();
+        }
+        else if (sortCriteria == "Price")
+        {
+            products = isAscending
+                ? products.OrderBy(p => p.Price).ToList()
+                : products.OrderByDescending(p => p.Price).ToList();
+        }
+    }
+
     private Dictionary<string, string> categoryImages = new()
     {
         { "All", "default.png" },
@@ -111,17 +158,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Fetch products from API
         allProducts = await Http.GetFromJsonAsync<List<Product>>("https://prof-elec.vercel.app/products");
         products = new List<Product>(allProducts);
-        UpdateTypeFilters(selectedCategory); // Initialize types for the default category
+        UpdateTypeFilters(selectedCategory);
     }
 
     private void ChangeCategory(string category)
     {
         selectedCategory = category;
-
-        // Filter products by selected category
         products = category == "All"
             ? allProducts
             : allProducts.Where(p => p.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -131,7 +175,6 @@
 
     private void UpdateTypeFilters(string category)
     {
-        // Dynamically update type filters based on the category
         availableTypes = category == "All"
             ? allProducts.Select(p => p.Type).Distinct().ToList()
             : allProducts.Where(p => p.Category.Equals(category, StringComparison.OrdinalIgnoreCase))
@@ -142,7 +185,6 @@
 
     private string GetCategoryImage()
     {
-        // Dynamically fetch category image or use default
         return categoryImages.TryGetValue(selectedCategory, out var img)
             ? $"/assets/images/{img}"
             : "/assets/images/default.png";
@@ -150,12 +192,11 @@
 
     private void SearchProducts()
     {
-        ApplyFilters(); // Ensure search works with current filters
+        ApplyFilters();
     }
 
     private void ApplyFilters()
     {
-        // Filter products based on search query, category, types, and price
         products = allProducts
             .Where(p => (string.IsNullOrWhiteSpace(searchQuery) || p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) &&
                         (selectedCategory == "All" || p.Category.Equals(selectedCategory, StringComparison.OrdinalIgnoreCase)) &&
@@ -167,7 +208,6 @@
 
     private void ClearFilters()
     {
-        // Reset all filters
         selectedCategory = "All";
         searchQuery = string.Empty;
         selectedTypes.Clear();
@@ -179,7 +219,6 @@
 
     private void FilterByType(string type)
     {
-        // Add or remove type from selected filters
         if (selectedTypes.Contains(type))
             selectedTypes.Remove(type);
         else
